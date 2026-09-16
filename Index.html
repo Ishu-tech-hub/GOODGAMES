@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GGames 🎮</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: white;
+        }
+
+        .header {
+            background: #1e293b;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 45px;
+        }
+
+        .header p {
+            color: #94a3b8;
+            font-size: 18px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 35px 20px;
+        }
+
+        .games {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 25px;
+        }
+
+        .game {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .game h2 {
+            font-size: 24px;
+        }
+
+        .game p {
+            color: #cbd5e1;
+            min-height: 45px;
+        }
+
+        button {
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 13px 28px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #818cf8;
+        }
+
+        button:disabled {
+            background: #475569;
+            cursor: not-allowed;
+        }
+
+        #gameScreen {
+            display: none;
+            text-align: center;
+        }
+
+        #score {
+            font-size: 28px;
+            margin: 25px;
+        }
+
+        #clickGame {
+            font-size: 100px;
+            cursor: pointer;
+            user-select: none;
+            margin: 30px;
+        }
+
+        #message {
+            min-height: 35px;
+        }
+
+        .back {
+            background: #334155;
+        }
+
+        .back:hover {
+            background: #475569;
+        }
+
+        footer {
+            text-align: center;
+            color: #64748b;
+            padding: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>🎮 GGames</h1>
+        <p>Play games. Have fun. Repeat.</p>
+    </div>
+
+    <div class="container">
+
+        <!-- HOME PAGE -->
+        <div id="home">
+
+            <h1>🎮 Games</h1>
+
+            <div class="games">
+
+                <div class="game">
+                    <h2>🔥 Click Challenge</h2>
+
+                    <p>
+                        Click as many times as you can!
+                    </p>
+
+                    <button onclick="startClickGame()">
+                        PLAY
+                    </button>
+                </div>
+
+
+                <div class="game">
+                    <h2>⚽ Football Clicker</h2>
+
+                    <p>
+                        Score goals and get SIUUUU!
+                    </p>
+
+                    <button onclick="startFootball()">
+                        PLAY
+                    </button>
+                </div>
+
+
+                <div class="game">
+                    <h2>🎯 Coming Soon</h2>
+
+                    <p>
+                        More games are coming!
+                    </p>
+
+                    <button disabled>
+                        SOON
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- GAME SCREEN -->
+        <div id="gameScreen">
+
+            <button class="back" onclick="goHome()">
+                ⬅ BACK
+            </button>
+
+            <h1 id="gameTitle"></h1>
+
+            <div id="score">
+                Score: 0
+            </div>
+
+            <div id="clickGame" onclick="clickAction()">
+                🟢
+            </div>
+
+            <h2 id="message"></h2>
+
+        </div>
+
+    </div>
+
+
+    <footer>
+        © 2026 GGames 🎮
+    </footer>
+
+
+    <script>
+
+        let score = 0;
+        let gameType = "";
+
+
+        function startClickGame() {
+
+            score = 0;
+            gameType = "click";
+
+            document.getElementById("home").style.display = "none";
+            document.getElementById("gameScreen").style.display = "block";
+
+            document.getElementById("gameTitle").innerText =
+                "🔥 Click Challenge";
+
+            document.getElementById("clickGame").innerText = "🟢";
+
+            document.getElementById("message").innerText =
+                "CLICK IT! 🔥";
+
+            updateScore();
+        }
+
+
+        function startFootball() {
+
+            score = 0;
+            gameType = "football";
+
+            document.getElementById("home").style.display = "none";
+            document.getElementById("gameScreen").style.display = "block";
+
+            document.getElementById("gameTitle").innerText =
+                "⚽ Football Clicker";
+
+            document.getElementById("clickGame").innerText = "⚽";
+
+            document.getElementById("message").innerText =
+                "GET READY! ⚽";
+
+            updateScore();
+        }
+
+
+        function clickAction() {
+
+            score++;
+
+            if (gameType === "click") {
+
+                document.getElementById("message").innerText =
+                    "KEEP CLICKING 🔥";
+            }
+
+
+            if (gameType === "football") {
+
+                if (score % 10 === 0) {
+
+                    document.getElementById("message").innerText =
+                        "GOOOOOOAAALLLLLLL ⚽🔥";
+                }
+
+                else {
+
+                    document.getElementById("message").innerText =
+                        "SIUUUUUU ⚽";
+                }
+            }
+
+            updateScore();
+        }
+
+
+        function updateScore() {
+
+            document.getElementById("score").innerText =
+                "Score: " + score;
+        }
+
+
+        function goHome() {
+
+            document.getElementById("gameScreen").style.display = "none";
+
+            document.getElementById("home").style.display = "block";
+
+            document.getElementById("message").innerText = "";
+        }
+
+    </script>
+
+</body>
+</html>
