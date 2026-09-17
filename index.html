@@ -1,306 +1,1272 @@
+```html
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GGames V1.1</title>
 
-    <title>GGames 🎮</title>
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+body {
+    font-family: Arial, sans-serif;
+    background: #090b14;
+    color: white;
+    min-height: 100vh;
+}
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #0f172a;
-            color: white;
-        }
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
 
-        .header {
-            background: #1e293b;
-            padding: 25px;
-            text-align: center;
-        }
+header {
+    text-align: center;
+    padding: 45px 20px 25px;
+}
 
-        .header h1 {
-            margin: 0;
-            font-size: 45px;
-        }
+.logo {
+    font-size: 55px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
 
-        .header p {
-            color: #94a3b8;
-            font-size: 18px;
-        }
+.tagline {
+    color: #aeb4c7;
+    font-size: 18px;
+    margin-top: 8px;
+}
 
-        .container {
-            max-width: 1100px;
-            margin: auto;
-            padding: 35px 20px;
-        }
+.home {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+}
 
-        .games {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-            gap: 25px;
-        }
+.games-title {
+    text-align: center;
+    font-size: 30px;
+    margin: 25px 0;
+}
 
-        .game {
-            background: #1e293b;
-            padding: 25px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
 
-        .game h2 {
-            font-size: 24px;
-        }
+.game-card {
+    background: #141827;
+    border: 1px solid #292e42;
+    border-radius: 20px;
+    padding: 28px;
+    text-align: center;
+    transition: 0.2s;
+}
 
-        .game p {
-            color: #cbd5e1;
-            min-height: 45px;
-        }
+.game-card:hover {
+    transform: translateY(-6px);
+    border-color: #6574ff;
+}
 
-        button {
-            background: #6366f1;
-            color: white;
-            border: none;
-            padding: 13px 28px;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+.game-icon {
+    font-size: 55px;
+    margin-bottom: 15px;
+}
 
-        button:hover {
-            background: #818cf8;
-        }
+.game-card h2 {
+    margin-bottom: 10px;
+}
 
-        button:disabled {
-            background: #475569;
-            cursor: not-allowed;
-        }
+.game-card p {
+    color: #aeb4c7;
+    min-height: 45px;
+    margin-bottom: 20px;
+}
 
-        #gameScreen {
-            display: none;
-            text-align: center;
-        }
+.play-btn,
+.action-btn,
+.back-btn {
+    border: none;
+    border-radius: 12px;
+    padding: 13px 22px;
+    font-weight: bold;
+    color: white;
+    background: #5865f2;
+}
 
-        #score {
-            font-size: 28px;
-            margin: 25px;
-        }
+.play-btn:hover,
+.action-btn:hover,
+.back-btn:hover {
+    filter: brightness(1.15);
+}
 
-        #clickGame {
-            font-size: 100px;
-            cursor: pointer;
-            user-select: none;
-            margin: 30px;
-        }
+.game-screen {
+    display: none;
+    max-width: 900px;
+    margin: auto;
+    padding: 25px 20px 50px;
+    text-align: center;
+}
 
-        #message {
-            min-height: 35px;
-        }
+.game-screen.active {
+    display: block;
+}
 
-        .back {
-            background: #334155;
-        }
+.back-btn {
+    margin-bottom: 25px;
+    background: #252a3d;
+}
 
-        .back:hover {
-            background: #475569;
-        }
+.game-box {
+    background: #141827;
+    border: 1px solid #292e42;
+    border-radius: 20px;
+    padding: 30px;
+}
 
-        footer {
-            text-align: center;
-            color: #64748b;
-            padding: 30px;
-        }
-    </style>
+.game-box h1 {
+    margin-bottom: 10px;
+}
+
+.instructions {
+    color: #aeb4c7;
+    margin-bottom: 20px;
+}
+
+.score {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 18px;
+}
+
+.big-button {
+    font-size: 70px;
+    background: #20263a;
+    border: 2px solid #5865f2;
+    border-radius: 25px;
+    padding: 25px 45px;
+    margin: 15px;
+}
+
+.message {
+    min-height: 30px;
+    margin: 15px;
+    font-size: 18px;
+}
+
+canvas {
+    background: #080a11;
+    border: 2px solid #30364d;
+    border-radius: 12px;
+    max-width: 100%;
+    margin: 15px auto;
+    display: block;
+}
+
+input {
+    padding: 13px;
+    border-radius: 10px;
+    border: 1px solid #3a4055;
+    background: #0d101b;
+    color: white;
+    font-size: 17px;
+    width: 180px;
+    text-align: center;
+}
+
+.quiz-question {
+    font-size: 23px;
+    margin: 25px 0;
+}
+
+.quiz-options {
+    display: grid;
+    gap: 12px;
+    max-width: 500px;
+    margin: auto;
+}
+
+.quiz-option {
+    padding: 15px;
+    border: 1px solid #383f58;
+    background: #20263a;
+    color: white;
+    border-radius: 12px;
+    font-size: 16px;
+}
+
+.quiz-option:hover {
+    background: #303750;
+}
+
+footer {
+    text-align: center;
+    color: #6f768c;
+    padding: 40px 20px;
+}
+
+@media (max-width: 800px) {
+    .games-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .logo {
+        font-size: 42px;
+    }
+}
+
+@media (max-width: 550px) {
+    .games-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .game-box {
+        padding: 20px 12px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <div class="header">
-        <h1>🎮 GGames</h1>
-        <p>Play games. Have fun. Repeat.</p>
-    </div>
+<!-- HOMEPAGE -->
+<div id="homePage">
 
-    <div class="container">
+<header>
+    <div class="logo">🎮 GGames</div>
+    <div class="tagline">Play. Have Fun. Repeat.</div>
+</header>
 
-        <!-- HOME PAGE -->
-        <div id="home">
+<main class="home">
+    <h1 class="games-title">🔥 Choose Your Game</h1>
 
-            <h1>🎮 Games</h1>
+    <div class="games-grid">
 
-            <div class="games">
-
-                <div class="game">
-                    <h2>🔥 Click Challenge</h2>
-
-                    <p>
-                        Click as many times as you can!
-                    </p>
-
-                    <button onclick="startClickGame()">
-                        PLAY
-                    </button>
-                </div>
-
-
-                <div class="game">
-                    <h2>⚽ Football Clicker</h2>
-
-                    <p>
-                        Score goals and get SIUUUU!
-                    </p>
-
-                    <button onclick="startFootball()">
-                        PLAY
-                    </button>
-                </div>
-
-
-                <div class="game">
-                    <h2>🎯 Coming Soon</h2>
-
-                    <p>
-                        More games are coming!
-                    </p>
-
-                    <button disabled>
-                        SOON
-                    </button>
-                </div>
-
-            </div>
-
+        <div class="game-card">
+            <div class="game-icon">⚽</div>
+            <h2>Football Clicker</h2>
+            <p>Score as many goals as you can!</p>
+            <button class="play-btn" onclick="openGame('football')">PLAY NOW</button>
         </div>
 
+        <div class="game-card">
+            <div class="game-icon">🏎️</div>
+            <h2>Racing</h2>
+            <p>Dodge traffic and survive the race.</p>
+            <button class="play-btn" onclick="openGame('racing')">PLAY NOW</button>
+        </div>
 
-        <!-- GAME SCREEN -->
-        <div id="gameScreen">
+        <div class="game-card">
+            <div class="game-icon">🐍</div>
+            <h2>Snake</h2>
+            <p>Eat the food and grow your snake.</p>
+            <button class="play-btn" onclick="openGame('snake')">PLAY NOW</button>
+        </div>
 
-            <button class="back" onclick="goHome()">
-                ⬅ BACK
-            </button>
+        <div class="game-card">
+            <div class="game-icon">🧱</div>
+            <h2>Breakout</h2>
+            <p>Break the blocks and keep the ball alive.</p>
+            <button class="play-btn" onclick="openGame('breakout')">PLAY NOW</button>
+        </div>
 
-            <h1 id="gameTitle"></h1>
+        <div class="game-card">
+            <div class="game-icon">🧠</div>
+            <h2>Quiz</h2>
+            <p>Test your gaming and general knowledge.</p>
+            <button class="play-btn" onclick="openGame('quiz')">PLAY NOW</button>
+        </div>
 
-            <div id="score">
-                Score: 0
-            </div>
-
-            <div id="clickGame" onclick="clickAction()">
-                🟢
-            </div>
-
-            <h2 id="message"></h2>
-
+        <div class="game-card">
+            <div class="game-icon">🎯</div>
+            <h2>Number Guessing</h2>
+            <p>Can you find the secret number?</p>
+            <button class="play-btn" onclick="openGame('guess')">PLAY NOW</button>
         </div>
 
     </div>
+</main>
+
+<footer>
+    © 2026 GGames • V1.1
+</footer>
+
+</div>
 
 
-    <footer>
-        © 2026 GGames 🎮
-    </footer>
+<!-- FOOTBALL -->
+<section id="football" class="game-screen">
+    <button class="back-btn" onclick="goHome()">⬅ BACK TO GAMES</button>
+
+    <div class="game-box">
+        <h1>⚽ Football Clicker</h1>
+        <p class="instructions">Click the ball and score goals!</p>
+
+        <div class="score">Goals: <span id="footballScore">0</span></div>
+
+        <button class="big-button" onclick="scoreGoal()">⚽</button>
+
+        <div class="message" id="goalMessage">Ready for kickoff?</div>
+
+        <button class="action-btn" onclick="resetFootball()">RESET</button>
+    </div>
+</section>
 
 
-    <script>
+<!-- RACING -->
+<section id="racing" class="game-screen">
+    <button class="back-btn" onclick="goHome()">⬅ BACK TO GAMES</button>
 
-        let score = 0;
-        let gameType = "";
+    <div class="game-box">
+        <h1>🏎️ Racing</h1>
+        <p class="instructions">Use ← → or A/D to move. Avoid the red cars!</p>
+
+        <div class="score">Score: <span id="racingScore">0</span></div>
+
+        <canvas id="racingCanvas" width="420" height="550"></canvas>
+
+        <div class="message" id="racingMessage">Press START to race!</div>
+
+        <button class="action-btn" onclick="startRacing()">START / RESTART</button>
+    </div>
+</section>
 
 
-        function startClickGame() {
+<!-- SNAKE -->
+<section id="snake" class="game-screen">
+    <button class="back-btn" onclick="goHome()">⬅ BACK TO GAMES</button>
 
-            score = 0;
-            gameType = "click";
+    <div class="game-box">
+        <h1>🐍 Snake</h1>
+        <p class="instructions">Use Arrow Keys or WASD.</p>
 
-            document.getElementById("home").style.display = "none";
-            document.getElementById("gameScreen").style.display = "block";
+        <div class="score">Score: <span id="snakeScore">0</span></div>
 
-            document.getElementById("gameTitle").innerText =
-                "🔥 Click Challenge";
+        <canvas id="snakeCanvas" width="400" height="400"></canvas>
 
-            document.getElementById("clickGame").innerText = "🟢";
+        <div class="message" id="snakeMessage">Press START to play!</div>
 
-            document.getElementById("message").innerText =
-                "CLICK IT! 🔥";
+        <button class="action-btn" onclick="startSnake()">START / RESTART</button>
+    </div>
+</section>
 
-            updateScore();
+
+<!-- BREAKOUT -->
+<section id="breakout" class="game-screen">
+    <button class="back-btn" onclick="goHome()">⬅ BACK TO GAMES</button>
+
+    <div class="game-box">
+        <h1>🧱 Breakout</h1>
+        <p class="instructions">Move with ← → or A/D. Break all the blocks!</p>
+
+        <div class="score">
+            Score: <span id="breakoutScore">0</span>
+            &nbsp; | &nbsp;
+            Lives: <span id="breakoutLives">3</span>
+        </div>
+
+        <canvas id="breakoutCanvas" width="600" height="450"></canvas>
+
+        <div class="message" id="breakoutMessage">Press START to play!</div>
+
+        <button class="action-btn" onclick="startBreakout()">START / RESTART</button>
+    </div>
+</section>
+
+
+<!-- QUIZ -->
+<section id="quiz" class="game-screen">
+    <button class="back-btn" onclick="goHome()">⬅ BACK TO GAMES</button>
+
+    <div class="game-box">
+        <h1>🧠 Quiz Game</h1>
+
+        <div class="score">
+            Score: <span id="quizScore">0</span>
+        </div>
+
+        <div id="quizArea"></div>
+
+        <button class="action-btn" onclick="startQuiz()">RESTART QUIZ</button>
+    </div>
+</section>
+
+
+<!-- NUMBER GUESSING -->
+<section id="guess" class="game-screen">
+    <button class="back-btn" onclick="goHome()">⬅ BACK TO GAMES</button>
+
+    <div class="game-box">
+        <h1>🎯 Number Guessing</h1>
+
+        <p class="instructions">
+            I'm thinking of a number from 1 to 100.
+        </p>
+
+        <input
+            id="guessInput"
+            type="number"
+            min="1"
+            max="100"
+            placeholder="Your guess"
+        >
+
+        <br><br>
+
+        <button class="action-btn" onclick="makeGuess()">GUESS</button>
+
+        <div class="score">
+            Attempts: <span id="guessAttempts">0</span>
+        </div>
+
+        <div class="message" id="guessMessage">
+            Make your first guess!
+        </div>
+
+        <button class="action-btn" onclick="startGuess()">NEW GAME</button>
+    </div>
+</section>
+
+
+<script>
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function openGame(gameId) {
+    document.getElementById("homePage").style.display = "none";
+
+    document.querySelectorAll(".game-screen").forEach(function(screen) {
+        screen.classList.remove("active");
+    });
+
+    document.getElementById(gameId).classList.add("active");
+
+    if (gameId === "quiz") {
+        startQuiz();
+    }
+
+    if (gameId === "guess") {
+        startGuess();
+    }
+}
+
+function goHome() {
+    document.querySelectorAll(".game-screen").forEach(function(screen) {
+        screen.classList.remove("active");
+    });
+
+    document.getElementById("homePage").style.display = "block";
+
+    stopRacing();
+    stopSnake();
+    stopBreakout();
+}
+
+
+/* =========================
+   FOOTBALL CLICKER
+========================= */
+
+let footballScore = 0;
+
+const goalMessages = [
+    "GOOOOOAL! 🔥",
+    "WHAT A STRIKE! ⚡",
+    "TOP CORNER! 🎯",
+    "SIUUUU! ⚽",
+    "INCREDIBLE FINISH! 🤯",
+    "ABSOLUTE BANGER! 💥",
+    "THE CROWD GOES WILD! 🗣️"
+];
+
+function scoreGoal() {
+    footballScore++;
+
+    document.getElementById("footballScore").textContent = footballScore;
+
+    let randomMessage =
+        goalMessages[Math.floor(Math.random() * goalMessages.length)];
+
+    document.getElementById("goalMessage").textContent = randomMessage;
+}
+
+function resetFootball() {
+    footballScore = 0;
+    document.getElementById("footballScore").textContent = "0";
+    document.getElementById("goalMessage").textContent =
+        "Ready for kickoff?";
+}
+
+
+/* =========================
+   RACING GAME
+========================= */
+
+const racingCanvas = document.getElementById("racingCanvas");
+const racingCtx = racingCanvas.getContext("2d");
+
+let racingRunning = false;
+let racingAnimation;
+let racingScore = 0;
+
+let playerCar = {
+    x: 190,
+    y: 460,
+    width: 40,
+    height: 70
+};
+
+let racingObstacles = [];
+
+function drawRacing() {
+    racingCtx.fillStyle = "#151925";
+    racingCtx.fillRect(0, 0, 420, 550);
+
+    racingCtx.fillStyle = "#303544";
+    racingCtx.fillRect(70, 0, 280, 550);
+
+    racingCtx.strokeStyle = "#ffffff";
+    racingCtx.lineWidth = 5;
+    racingCtx.setLineDash([25, 25]);
+
+    racingCtx.beginPath();
+    racingCtx.moveTo(140, 0);
+    racingCtx.lineTo(140, 550);
+    racingCtx.stroke();
+
+    racingCtx.beginPath();
+    racingCtx.moveTo(280, 0);
+    racingCtx.lineTo(280, 550);
+    racingCtx.stroke();
+
+    racingCtx.setLineDash([]);
+
+    racingCtx.fillStyle = "#4d7cff";
+    racingCtx.fillRect(
+        playerCar.x,
+        playerCar.y,
+        playerCar.width,
+        playerCar.height
+    );
+
+    racingCtx.fillStyle = "#dce7ff";
+    racingCtx.fillRect(
+        playerCar.x + 7,
+        playerCar.y + 10,
+        26,
+        18
+    );
+
+    racingObstacles.forEach(function(car) {
+        racingCtx.fillStyle = "#ff4040";
+        racingCtx.fillRect(car.x, car.y, car.width, car.height);
+
+        racingCtx.fillStyle = "#222";
+        racingCtx.fillRect(car.x + 7, car.y + 10, 26, 18);
+    });
+}
+
+function startRacing() {
+    stopRacing();
+
+    racingRunning = true;
+    racingScore = 0;
+
+    playerCar.x = 190;
+    racingObstacles = [];
+
+    document.getElementById("racingScore").textContent = "0";
+    document.getElementById("racingMessage").textContent =
+        "GO! Dodge the cars!";
+
+    racingLoop();
+}
+
+function stopRacing() {
+    racingRunning = false;
+
+    if (racingAnimation) {
+        cancelAnimationFrame(racingAnimation);
+    }
+}
+
+function racingLoop() {
+    if (!racingRunning) return;
+
+    racingCtx.clearRect(0, 0, 420, 550);
+
+    if (Math.random() < 0.025) {
+        let lane = Math.floor(Math.random() * 3);
+
+        racingObstacles.push({
+            x: 85 + lane * 95,
+            y: -80,
+            width: 40,
+            height: 70
+        });
+    }
+
+    racingObstacles.forEach(function(car) {
+        car.y += 5;
+    });
+
+    racingObstacles = racingObstacles.filter(function(car) {
+        return car.y < 570;
+    });
+
+    racingObstacles.forEach(function(car) {
+        if (
+            playerCar.x < car.x + car.width &&
+            playerCar.x + playerCar.width > car.x &&
+            playerCar.y < car.y + car.height &&
+            playerCar.y + playerCar.height > car.y
+        ) {
+            racingRunning = false;
+
+            document.getElementById("racingMessage").textContent =
+                "💥 CRASH! Final score: " + racingScore;
+
+            return;
+        }
+    });
+
+    if (racingRunning) {
+        racingScore++;
+        document.getElementById("racingScore").textContent =
+            Math.floor(racingScore / 10);
+    }
+
+    drawRacing();
+
+    racingAnimation = requestAnimationFrame(racingLoop);
+}
+
+document.addEventListener("keydown", function(event) {
+    if (!racingRunning) return;
+
+    if (
+        event.key === "ArrowLeft" ||
+        event.key.toLowerCase() === "a"
+    ) {
+        playerCar.x -= 20;
+    }
+
+    if (
+        event.key === "ArrowRight" ||
+        event.key.toLowerCase() === "d"
+    ) {
+        playerCar.x += 20;
+    }
+
+    if (playerCar.x < 75) {
+        playerCar.x = 75;
+    }
+
+    if (playerCar.x > 305) {
+        playerCar.x = 305;
+    }
+});
+
+
+/* =========================
+   SNAKE
+========================= */
+
+const snakeCanvas = document.getElementById("snakeCanvas");
+const snakeCtx = snakeCanvas.getContext("2d");
+
+const snakeSize = 20;
+
+let snake = [];
+let snakeFood = {};
+let snakeDirection = "right";
+let snakeNextDirection = "right";
+let snakeRunning = false;
+let snakeTimer;
+let snakeScore = 0;
+
+function startSnake() {
+    stopSnake();
+
+    snake = [
+        {x: 200, y: 200},
+        {x: 180, y: 200},
+        {x: 160, y: 200}
+    ];
+
+    snakeDirection = "right";
+    snakeNextDirection = "right";
+    snakeScore = 0;
+    snakeRunning = true;
+
+    document.getElementById("snakeScore").textContent = "0";
+    document.getElementById("snakeMessage").textContent =
+        "Eat the food!";
+
+    placeSnakeFood();
+
+    snakeTimer = setInterval(snakeGameLoop, 110);
+}
+
+function stopSnake() {
+    snakeRunning = false;
+
+    if (snakeTimer) {
+        clearInterval(snakeTimer);
+    }
+}
+
+function placeSnakeFood() {
+    snakeFood = {
+        x: Math.floor(Math.random() * 20) * snakeSize,
+        y: Math.floor(Math.random() * 20) * snakeSize
+    };
+}
+
+function snakeGameLoop() {
+    if (!snakeRunning) return;
+
+    snakeDirection = snakeNextDirection;
+
+    let head = {
+        x: snake[0].x,
+        y: snake[0].y
+    };
+
+    if (snakeDirection === "up") head.y -= snakeSize;
+    if (snakeDirection === "down") head.y += snakeSize;
+    if (snakeDirection === "left") head.x -= snakeSize;
+    if (snakeDirection === "right") head.x += snakeSize;
+
+    if (
+        head.x < 0 ||
+        head.x >= 400 ||
+        head.y < 0 ||
+        head.y >= 400
+    ) {
+        endSnake();
+        return;
+    }
+
+    for (let i = 0; i < snake.length; i++) {
+        if (
+            head.x === snake[i].x &&
+            head.y === snake[i].y
+        ) {
+            endSnake();
+            return;
+        }
+    }
+
+    snake.unshift(head);
+
+    if (
+        head.x === snakeFood.x &&
+        head.y === snakeFood.y
+    ) {
+        snakeScore++;
+        document.getElementById("snakeScore").textContent =
+            snakeScore;
+
+        placeSnakeFood();
+    } else {
+        snake.pop();
+    }
+
+    drawSnake();
+}
+
+function endSnake() {
+    stopSnake();
+
+    document.getElementById("snakeMessage").textContent =
+        "💥 GAME OVER! Final score: " + snakeScore;
+}
+
+function drawSnake() {
+    snakeCtx.fillStyle = "#080a11";
+    snakeCtx.fillRect(0, 0, 400, 400);
+
+    snakeCtx.fillStyle = "#ff4d6d";
+    snakeCtx.fillRect(
+        snakeFood.x,
+        snakeFood.y,
+        snakeSize,
+        snakeSize
+    );
+
+    snake.forEach(function(part, index) {
+        snakeCtx.fillStyle =
+            index === 0 ? "#5865f2" : "#7d87ff";
+
+        snakeCtx.fillRect(
+            part.x + 1,
+            part.y + 1,
+            snakeSize - 2,
+            snakeSize - 2
+        );
+    });
+}
+
+document.addEventListener("keydown", function(event) {
+    if (!snakeRunning) return;
+
+    let key = event.key.toLowerCase();
+
+    if (
+        (event.key === "ArrowUp" || key === "w") &&
+        snakeDirection !== "down"
+    ) {
+        snakeNextDirection = "up";
+    }
+
+    if (
+        (event.key === "ArrowDown" || key === "s") &&
+        snakeDirection !== "up"
+    ) {
+        snakeNextDirection = "down";
+    }
+
+    if (
+        (event.key === "ArrowLeft" || key === "a") &&
+        snakeDirection !== "right"
+    ) {
+        snakeNextDirection = "left";
+    }
+
+    if (
+        (event.key === "ArrowRight" || key === "d") &&
+        snakeDirection !== "left"
+    ) {
+        snakeNextDirection = "right";
+    }
+});
+
+
+/* =========================
+   BREAKOUT
+========================= */
+
+const breakoutCanvas = document.getElementById("breakoutCanvas");
+const breakoutCtx = breakoutCanvas.getContext("2d");
+
+let breakoutRunning = false;
+let breakoutAnimation;
+
+let breakoutBall = {
+    x: 300,
+    y: 350,
+    dx: 4,
+    dy: -4,
+    radius: 8
+};
+
+let breakoutPaddle = {
+    x: 250,
+    y: 420,
+    width: 100,
+    height: 12
+};
+
+let breakoutBlocks = [];
+let breakoutScore = 0;
+let breakoutLives = 3;
+
+function createBreakoutBlocks() {
+    breakoutBlocks = [];
+
+    for (let row = 0; row < 4; row++) {
+        for (let col = 0; col < 8; col++) {
+            breakoutBlocks.push({
+                x: 45 + col * 65,
+                y: 45 + row * 30,
+                width: 55,
+                height: 20,
+                alive: true
+            });
+        }
+    }
+}
+
+function startBreakout() {
+    stopBreakout();
+
+    breakoutRunning = true;
+    breakoutScore = 0;
+    breakoutLives = 3;
+
+    breakoutBall.x = 300;
+    breakoutBall.y = 350;
+    breakoutBall.dx = 4;
+    breakoutBall.dy = -4;
+
+    breakoutPaddle.x = 250;
+
+    createBreakoutBlocks();
+
+    document.getElementById("breakoutScore").textContent = "0";
+    document.getElementById("breakoutLives").textContent = "3";
+    document.getElementById("breakoutMessage").textContent =
+        "Break those blocks!";
+
+    breakoutLoop();
+}
+
+function stopBreakout() {
+    breakoutRunning = false;
+
+    if (breakoutAnimation) {
+        cancelAnimationFrame(breakoutAnimation);
+    }
+}
+
+function drawBreakout() {
+    breakoutCtx.fillStyle = "#080a11";
+    breakoutCtx.fillRect(0, 0, 600, 450);
+
+    breakoutBlocks.forEach(function(block) {
+        if (block.alive) {
+            breakoutCtx.fillStyle = "#5865f2";
+            breakoutCtx.fillRect(
+                block.x,
+                block.y,
+                block.width,
+                block.height
+            );
+        }
+    });
+
+    breakoutCtx.fillStyle = "#ffffff";
+    breakoutCtx.fillRect(
+        breakoutPaddle.x,
+        breakoutPaddle.y,
+        breakoutPaddle.width,
+        breakoutPaddle.height
+    );
+
+    breakoutCtx.beginPath();
+    breakoutCtx.arc(
+        breakoutBall.x,
+        breakoutBall.y,
+        breakoutBall.radius,
+        0,
+        Math.PI * 2
+    );
+
+    breakoutCtx.fillStyle = "#ffcf40";
+    breakoutCtx.fill();
+}
+
+function breakoutLoop() {
+    if (!breakoutRunning) return;
+
+    breakoutBall.x += breakoutBall.dx;
+    breakoutBall.y += breakoutBall.dy;
+
+    if (
+        breakoutBall.x + breakoutBall.radius > 600 ||
+        breakoutBall.x - breakoutBall.radius < 0
+    ) {
+        breakoutBall.dx *= -1;
+    }
+
+    if (breakoutBall.y - breakoutBall.radius < 0) {
+        breakoutBall.dy *= -1;
+    }
+
+    if (
+        breakoutBall.y + breakoutBall.radius >= breakoutPaddle.y &&
+        breakoutBall.x >= breakoutPaddle.x &&
+        breakoutBall.x <=
+            breakoutPaddle.x + breakoutPaddle.width
+    ) {
+        breakoutBall.dy = -Math.abs(breakoutBall.dy);
+    }
+
+    breakoutBlocks.forEach(function(block) {
+        if (!block.alive) return;
+
+        if (
+            breakoutBall.x > block.x &&
+            breakoutBall.x < block.x + block.width &&
+            breakoutBall.y > block.y &&
+            breakoutBall.y < block.y + block.height
+        ) {
+            block.alive = false;
+            breakoutBall.dy *= -1;
+
+            breakoutScore += 10;
+
+            document.getElementById("breakoutScore").textContent =
+                breakoutScore;
+        }
+    });
+
+    let remaining = breakoutBlocks.filter(function(block) {
+        return block.alive;
+    }).length;
+
+    if (remaining === 0) {
+        breakoutRunning = false;
+
+        document.getElementById("breakoutMessage").textContent =
+            "🏆 YOU CLEARED THE BOARD!";
+
+        drawBreakout();
+        return;
+    }
+
+    if (breakoutBall.y > 460) {
+        breakoutLives--;
+
+        document.getElementById("breakoutLives").textContent =
+            breakoutLives;
+
+        if (breakoutLives <= 0) {
+            breakoutRunning = false;
+
+            document.getElementById("breakoutMessage").textContent =
+                "GAME OVER! Score: " + breakoutScore;
+
+            drawBreakout();
+            return;
         }
 
+        breakoutBall.x = 300;
+        breakoutBall.y = 350;
+        breakoutBall.dx = 4;
+        breakoutBall.dy = -4;
+    }
 
-        function startFootball() {
+    drawBreakout();
 
-            score = 0;
-            gameType = "football";
+    breakoutAnimation =
+        requestAnimationFrame(breakoutLoop);
+}
 
-            document.getElementById("home").style.display = "none";
-            document.getElementById("gameScreen").style.display = "block";
+document.addEventListener("keydown", function(event) {
+    if (!breakoutRunning) return;
 
-            document.getElementById("gameTitle").innerText =
-                "⚽ Football Clicker";
+    let key = event.key.toLowerCase();
 
-            document.getElementById("clickGame").innerText = "⚽";
+    if (
+        event.key === "ArrowLeft" ||
+        key === "a"
+    ) {
+        breakoutPaddle.x -= 25;
+    }
 
-            document.getElementById("message").innerText =
-                "GET READY! ⚽";
+    if (
+        event.key === "ArrowRight" ||
+        key === "d"
+    ) {
+        breakoutPaddle.x += 25;
+    }
 
-            updateScore();
-        }
+    if (breakoutPaddle.x < 0) {
+        breakoutPaddle.x = 0;
+    }
 
-
-        function clickAction() {
-
-            score++;
-
-            if (gameType === "click") {
-
-                document.getElementById("message").innerText =
-                    "KEEP CLICKING 🔥";
-            }
-
-
-            if (gameType === "football") {
-
-                if (score % 10 === 0) {
-
-                    document.getElementById("message").innerText =
-                        "GOOOOOOAAALLLLLLL ⚽🔥";
-                }
-
-                else {
-
-                    document.getElementById("message").innerText =
-                        "SIUUUUUU ⚽";
-                }
-            }
-
-            updateScore();
-        }
+    if (
+        breakoutPaddle.x + breakoutPaddle.width > 600
+    ) {
+        breakoutPaddle.x =
+            600 - breakoutPaddle.width;
+    }
+});
 
 
-        function updateScore() {
+/* =========================
+   QUIZ GAME
+========================= */
 
-            document.getElementById("score").innerText =
-                "Score: " + score;
-        }
+const quizQuestions = [
+    {
+        question: "Which sport uses a football?",
+        options: ["Football", "Tennis", "Swimming", "Chess"],
+        answer: 0
+    },
+    {
+        question: "How many days are in a week?",
+        options: ["5", "6", "7", "8"],
+        answer: 2
+    },
+    {
+        question: "Which animal is known as the King of the Jungle?",
+        options: ["Tiger", "Lion", "Wolf", "Bear"],
+        answer: 1
+    },
+    {
+        question: "What planet do we live on?",
+        options: ["Mars", "Venus", "Earth", "Jupiter"],
+        answer: 2
+    },
+    {
+        question: "Which game has a snake that grows when it eats?",
+        options: ["Snake", "Chess", "Racing", "Football"],
+        answer: 0
+    },
+    {
+        question: "How many sides does a triangle have?",
+        options: ["2", "3", "4", "5"],
+        answer: 1
+    }
+];
+
+let quizIndex = 0;
+let quizScore = 0;
+
+function startQuiz() {
+    quizIndex = 0;
+    quizScore = 0;
+
+    document.getElementById("quizScore").textContent = "0";
+
+    showQuizQuestion();
+}
+
+function showQuizQuestion() {
+    let area = document.getElementById("quizArea");
+
+    if (quizIndex >= quizQuestions.length) {
+        area.innerHTML =
+            "<h2>🏆 Quiz Complete!</h2>" +
+            "<p class='quiz-question'>Final Score: " +
+            quizScore +
+            " / " +
+            quizQuestions.length +
+            "</p>";
+
+        return;
+    }
+
+    let question = quizQuestions[quizIndex];
+
+    let html =
+        "<div class='quiz-question'>" +
+        (quizIndex + 1) +
+        ". " +
+        question.question +
+        "</div>";
+
+    html += "<div class='quiz-options'>";
+
+    question.options.forEach(function(option, index) {
+        html +=
+            "<button class='quiz-option' onclick='answerQuiz(" +
+            index +
+            ")'>" +
+            option +
+            "</button>";
+    });
+
+    html += "</div>";
+
+    area.innerHTML = html;
+}
+
+function answerQuiz(selected) {
+    let question = quizQuestions[quizIndex];
+
+    if (selected === question.answer) {
+        quizScore++;
+
+        document.getElementById("quizScore").textContent =
+            quizScore;
+
+        alert("✅ Correct!");
+    } else {
+        alert(
+            "❌ Not quite! The correct answer was: " +
+            question.options[question.answer]
+        );
+    }
+
+    quizIndex++;
+    showQuizQuestion();
+}
 
 
-        function goHome() {
+/* =========================
+   NUMBER GUESSING
+========================= */
 
-            document.getElementById("gameScreen").style.display = "none";
+let secretNumber = 0;
+let guessAttempts = 0;
 
-            document.getElementById("home").style.display = "block";
+function startGuess() {
+    secretNumber =
+        Math.floor(Math.random() * 100) + 1;
 
-            document.getElementById("message").innerText = "";
-        }
+    guessAttempts = 0;
 
-    </script>
+    document.getElementById("guessAttempts").textContent =
+        "0";
+
+    document.getElementById("guessMessage").textContent =
+        "Make your first guess!";
+
+    document.getElementById("guessInput").value = "";
+}
+
+function makeGuess() {
+    let input =
+        document.getElementById("guessInput");
+
+    let guess = Number(input.value);
+
+    if (!Number.isInteger(guess) || guess < 1 || guess > 100) {
+        document.getElementById("guessMessage").textContent =
+            "⚠️ Enter a whole number from 1 to 100.";
+
+        return;
+    }
+
+    guessAttempts++;
+
+    document.getElementById("guessAttempts").textContent =
+        guessAttempts;
+
+    if (guess === secretNumber) {
+        document.getElementById("guessMessage").textContent =
+            "🎉 YOU GOT IT! The number was " +
+            secretNumber +
+            "!";
+
+        return;
+    }
+
+    if (guess < secretNumber) {
+        document.getElementById("guessMessage").textContent =
+            "⬆️ Too low! Try a higher number.";
+    } else {
+        document.getElementById("guessMessage").textContent =
+            "⬇️ Too high! Try a lower number.";
+    }
+}
+
+
+/* =========================
+   INITIAL SETUP
+========================= */
+
+startGuess();
+
+drawRacing();
+drawBreakout();
+
+</script>
 
 </body>
 </html>
+```
+
+          
