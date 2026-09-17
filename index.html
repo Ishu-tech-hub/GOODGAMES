@@ -3,3593 +3,1238 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>GGames — Play. Have Fun. Repeat.</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-
+*{box-sizing:border-box}
 body{
-font-family:Arial,sans-serif;
-background:#070812;
-color:white;
-min-height:100vh;
-overflow-x:hidden;
+ margin:0;
+ font-family:Arial,Helvetica,sans-serif;
+ background:#080b12;
+ color:white;
 }
-
-body:before{
-content:"";
-position:fixed;
-width:600px;
-height:600px;
-border-radius:50%;
-background:rgba(100,60,255,.16);
-filter:blur(100px);
-top:-200px;
-left:-150px;
-animation:float 8s infinite alternate;
-pointer-events:none;
-}
-
-body:after{
-content:"";
-position:fixed;
-width:500px;
-height:500px;
-border-radius:50%;
-background:rgba(0,220,255,.10);
-filter:blur(100px);
-bottom:-200px;
-right:-150px;
-animation:float2 10s infinite alternate;
-pointer-events:none;
-}
-
-@keyframes float{
-to{transform:translate(180px,120px)}
-}
-
-@keyframes float2{
-to{transform:translate(-150px,-100px)}
-}
-
 header{
-padding:28px 6%;
-display:flex;
-justify-content:space-between;
-align-items:center;
-position:relative;
-z-index:2;
+ padding:28px 20px 18px;
+ text-align:center;
+ background:linear-gradient(180deg,#111827,#080b12);
 }
-
-.logo{
-font-size:34px;
-font-weight:900;
-letter-spacing:-2px;
-}
-
-.logo span{color:#8d6bff}
-
+.logo{font-size:34px;font-weight:900}
+.tag{color:#9ca3af;margin-top:6px}
 .badge{
-padding:10px 16px;
-border:1px solid #302b55;
-border-radius:30px;
-background:rgba(20,20,40,.7);
-color:#bdb6ff;
-font-size:13px;
+ display:inline-block;
+ margin-top:12px;
+ padding:7px 14px;
+ border-radius:20px;
+ background:#171d2b;
+ color:#60a5fa;
+ font-weight:bold;
 }
-
-.hero{
-text-align:center;
-padding:55px 20px 35px;
-position:relative;
-z-index:1;
-}
-
-.hero h1{
-font-size:clamp(55px,10vw,110px);
-font-weight:1000;
-letter-spacing:-7px;
-background:linear-gradient(90deg,#fff,#9b7cff,#54eaff,#fff);
-background-size:300%;
--webkit-background-clip:text;
-color:transparent;
-animation:gradient 5s linear infinite;
-}
-
-@keyframes gradient{
-to{background-position:300%}
-}
-
-.hero p{
-color:#aaa8bc;
-margin:18px 0 30px;
-font-size:18px;
-}
-
+.container{max-width:1200px;margin:auto;padding:20px}
 .search{
-width:min(650px,90%);
-margin:auto;
+ width:100%;
+ padding:15px;
+ border:0;
+ border-radius:12px;
+ background:#151b28;
+ color:white;
+ font-size:16px;
+ outline:none;
 }
-
-.search input{
-width:100%;
-padding:18px 22px;
-border-radius:18px;
-border:1px solid #302b55;
-background:#111120;
-color:white;
-outline:none;
-font-size:16px;
+.filters{
+ display:flex;
+ gap:10px;
+ flex-wrap:wrap;
+ margin:15px 0 25px;
 }
-
-.search input:focus{
-border-color:#8065ff;
-box-shadow:0 0 30px rgba(100,80,255,.25);
+.filters button,.restart,.back,.choice,.control{
+ border:0;
+ border-radius:10px;
+ padding:10px 15px;
+ background:#1b2333;
+ color:white;
+ cursor:pointer;
+ font-weight:bold;
 }
-
-.categories{
-display:flex;
-justify-content:center;
-gap:10px;
-flex-wrap:wrap;
-padding:20px;
+.filters button:hover,.restart:hover,.back:hover,.choice:hover,.control:hover{
+ background:#293449;
 }
-
-.cat{
-padding:10px 16px;
-border:1px solid #29263f;
-background:#11101c;
-color:#aaa;
-border-radius:30px;
-cursor:pointer;
-transition:.2s;
+h2{margin-top:10px}
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+ gap:16px;
 }
-
-.cat:hover,.cat.active{
-background:#7560ff;
-color:white;
-border-color:#7560ff;
-transform:translateY(-2px);
-}
-
-.section{
-width:min(1250px,92%);
-margin:20px auto 70px;
-position:relative;
-z-index:1;
-}
-
-.section-title{
-font-size:25px;
-margin:30px 0 20px;
-}
-
-.games{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-gap:18px;
-}
-
 .card{
-background:linear-gradient(145deg,rgba(24,23,42,.95),rgba(13,13,25,.95));
-border:1px solid #282541;
-border-radius:22px;
-padding:22px;
-min-height:235px;
-display:flex;
-flex-direction:column;
-transition:.3s;
-animation:cardIn .5s ease both;
+ background:linear-gradient(145deg,#151b29,#0e131e);
+ border:1px solid #252d3d;
+ border-radius:18px;
+ padding:20px;
+ min-height:170px;
+ cursor:pointer;
+ transition:.2s;
 }
-
-@keyframes cardIn{
-from{opacity:0;transform:translateY(20px)}
-to{opacity:1;transform:translateY(0)}
-}
-
 .card:hover{
-transform:translateY(-8px) scale(1.015);
-border-color:#7863ff;
-box-shadow:0 18px 45px rgba(70,50,180,.25);
+ transform:translateY(-5px);
+ border-color:#4b5563;
 }
-
-.icon{
-font-size:48px;
-margin-bottom:16px;
-animation:bob 3s ease-in-out infinite;
-}
-
-@keyframes bob{
-50%{transform:translateY(-5px)}
-}
-
-.card h3{
-font-size:20px;
-margin-bottom:8px;
-}
-
-.card p{
-color:#9190a0;
-font-size:13px;
-line-height:1.5;
-flex:1;
-}
-
+.icon{font-size:42px}
+.card h3{margin:10px 0 7px}
+.card p{color:#9ca3af;margin:0}
 .play{
-border:0;
-background:linear-gradient(90deg,#765cff,#4e9dff);
-color:white;
-padding:12px;
-border-radius:12px;
-cursor:pointer;
-font-weight:bold;
-margin-top:18px;
-transition:.2s;
+ margin-top:18px;
+ display:inline-block;
+ padding:9px 13px;
+ border-radius:9px;
+ background:#2563eb;
+ font-weight:bold;
 }
-
-.play:hover{
-filter:brightness(1.2);
-transform:scale(1.03);
-}
-
-#gameScreen{
-display:none;
-min-height:100vh;
-padding:25px;
-position:relative;
-z-index:5;
-}
-
-.back{
-border:1px solid #36314e;
-background:#141322;
-color:white;
-padding:11px 18px;
-border-radius:12px;
-cursor:pointer;
-margin-bottom:20px;
-}
-
-.gameBox{
-width:min(950px,100%);
-margin:auto;
-text-align:center;
-}
-
-.gameBox h2{
-font-size:38px;
-margin:15px 0 8px;
-}
-
-.gameInfo{
-color:#aaa;
-margin-bottom:10px;
-}
-
+#gameScreen{display:none}
 .gameTop{
-display:flex;
-justify-content:center;
-gap:15px;
-flex-wrap:wrap;
-margin:12px 0;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+ flex-wrap:wrap;
+ margin-bottom:18px;
 }
-
+.stats{
+ display:flex;
+ gap:12px;
+ flex-wrap:wrap;
+}
 .stat{
-background:#121222;
-border:1px solid #302b55;
-border-radius:12px;
-padding:10px 16px;
-color:#d8d4ff;
+ background:#151b28;
+ padding:10px 14px;
+ border-radius:10px;
 }
-
-canvas{
-background:#0d0d19;
-border:1px solid #383253;
-border-radius:18px;
-max-width:100%;
-touch-action:none;
+.gameBox{
+ background:#101722;
+ border:1px solid #252d3d;
+ border-radius:18px;
+ padding:22px;
+ min-height:400px;
+ text-align:center;
 }
-
-.controls{
-margin:15px;
-color:#999;
+.big{
+ font-size:60px;
+ font-weight:900;
+ margin:25px 0;
 }
-
-.action{
-border:0;
-background:#765cff;
-color:white;
-padding:13px 20px;
-border-radius:12px;
-cursor:pointer;
-margin:6px;
-font-weight:bold;
-}
-
-.action:hover{
-filter:brightness(1.15);
-transform:translateY(-2px);
-}
-
-.restart{
-background:#25233b;
-border:1px solid #494365;
-}
-
-.bigNumber{
-font-size:70px;
-font-weight:900;
-margin:25px;
-}
-
-.choice{
-display:block;
-width:min(500px,90%);
-margin:10px auto;
-padding:15px;
-border:1px solid #36314e;
-background:#151424;
-color:white;
-border-radius:12px;
-cursor:pointer;
-font-size:16px;
-}
-
-.choice:hover{
-background:#30275e;
-}
-
 .message{
-margin:15px;
-min-height:25px;
-color:#bdb5ff;
+ color:#cbd5e1;
+ font-size:18px;
+ margin:15px;
 }
-
-.textInput{
-padding:15px;
-border-radius:10px;
-background:#151424;
-color:white;
-border:1px solid #45405e;
-outline:none;
-font-size:16px;
+.gameButton{
+ padding:14px 20px;
+ border:0;
+ border-radius:12px;
+ background:#2563eb;
+ color:white;
+ font-weight:bold;
+ cursor:pointer;
+ margin:6px;
 }
-
-.levelBox{
-font-size:20px;
-font-weight:bold;
-color:#b9aaff;
-margin:8px;
+input.gameInput{
+ padding:13px;
+ border-radius:10px;
+ border:1px solid #374151;
+ background:#0b1018;
+ color:white;
+ font-size:18px;
+ width:220px;
+ text-align:center;
 }
-
-.timerDanger{
-color:#ff6b7a;
-animation:pulse .5s infinite alternate;
+canvas{
+ max-width:100%;
+ background:#05070b;
+ border-radius:14px;
 }
-
-@keyframes pulse{
-to{transform:scale(1.08)}
+.memoryGrid{
+ display:grid;
+ grid-template-columns:repeat(4,65px);
+ gap:8px;
+ justify-content:center;
+ margin:25px auto;
 }
-
-.rankGrid{
-display:grid;
-grid-template-columns:repeat(5,1fr);
-gap:10px;
-width:min(650px,95%);
-margin:20px auto;
+.memoryCell{
+ width:65px;
+ height:65px;
+ border:0;
+ border-radius:10px;
+ background:#273244;
+ cursor:pointer;
 }
-
-.rankSlot{
-height:65px;
-background:#151424;
-border:1px dashed #55506e;
-border-radius:12px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:bold;
-font-size:13px;
-padding:5px;
+.memoryCell.active{background:#60a5fa}
+.rankList{
+ max-width:400px;
+ margin:auto;
 }
-
-.rankPlayers{
-display:flex;
-flex-wrap:wrap;
-gap:10px;
-justify-content:center;
-width:min(700px,95%);
-margin:auto;
+.rankItem{
+ padding:12px;
+ margin:7px;
+ background:#1b2333;
+ border-radius:10px;
+ cursor:pointer;
 }
-
-.playerBtn{
-padding:13px 18px;
-border:1px solid #403b5d;
-background:#171627;
-color:white;
-border-radius:12px;
-cursor:pointer;
+.word{
+ font-size:36px;
+ letter-spacing:6px;
+ margin:25px;
+ font-weight:900;
 }
-
-.playerBtn:hover{
-background:#7560ff;
-}
-
-.answerBox{
-width:min(550px,90%);
-margin:20px auto;
-background:#151424;
-border:1px solid #393451;
-border-radius:20px;
-padding:25px;
-font-size:27px;
-font-weight:bold;
-}
-
 footer{
-text-align:center;
-color:#555466;
-padding:30px;
+ text-align:center;
+ color:#6b7280;
+ padding:30px;
 }
-
 @media(max-width:600px){
-.hero h1{letter-spacing:-4px}
-header{padding:20px}
-.hero{padding-top:35px}
-.rankGrid{grid-template-columns:repeat(2,1fr)}
+ .logo{font-size:28px}
+ .memoryGrid{grid-template-columns:repeat(4,55px)}
+ .memoryCell{width:55px;height:55px}
 }
-
-.hidden{display:none!important}
 </style>
 </head>
 
 <body>
 
 <header>
-<div class="logo">🎮 G<span>Games</span></div>
-<div class="badge">V1.2 • 38 GAMES</div>
+ <div class="logo">🎮 GGames</div>
+ <div class="tag">Play. Have Fun. Repeat.</div>
+ <div class="badge">V1.2 • 36 GAMES</div>
 </header>
 
-<main id="home">
+<div class="container">
 
-<section class="hero">
-<h1>GGAMES</h1>
-<p>Play. Have Fun. Repeat.</p>
+<section id="homeScreen">
 
-<div class="search">
-<input id="search" placeholder="🔎 Search a game..." oninput="searchGames()">
-</div>
-</section>
+<input id="search" class="search" placeholder="🔎 Search a game...">
 
-<div class="categories">
-<button class="cat active" onclick="filterGames('All',this)">All</button>
-<button class="cat" onclick="filterGames('Sports',this)">⚽ Sports</button>
-<button class="cat" onclick="filterGames('Racing',this)">🏎️ Racing</button>
-<button class="cat" onclick="filterGames('Puzzle',this)">🧠 Puzzle</button>
-<button class="cat" onclick="filterGames('Arcade',this)">🕹️ Arcade</button>
-<button class="cat" onclick="filterGames('Quick',this)">⚡ Quick</button>
+<div class="filters">
+ <button onclick="filterGames('all')">All</button>
+ <button onclick="filterGames('sports')">⚽ Sports</button>
+ <button onclick="filterGames('racing')">🏎️ Racing</button>
+ <button onclick="filterGames('puzzle')">🧠 Puzzle</button>
+ <button onclick="filterGames('arcade')">🕹️ Arcade</button>
+ <button onclick="filterGames('quick')">⚡ Quick</button>
 </div>
 
-<section class="section">
-<h2 class="section-title">🔥 Trending Games</h2>
-<div class="games" id="games"></div>
-</section>
+<h2>🔥 Trending Games</h2>
+<div id="gameGrid" class="grid"></div>
 
-</main>
+</section>
 
 <section id="gameScreen">
 
-<div class="gameBox">
-
-<button class="back" onclick="goHome()">← BACK TO GAMES</button>
-
-<h2 id="gameTitle"></h2>
-
-<div class="gameInfo" id="gameInfo"></div>
-
 <div class="gameTop">
-<div class="stat" id="levelDisplay">Level 1</div>
-<div class="stat" id="timerDisplay">⏱️ 60</div>
-<div class="stat" id="scoreDisplay">🏆 0</div>
+ <button class="back" onclick="goHome()">← BACK TO GAMES</button>
+ <button class="restart" onclick="restartGame()">🔄 RESTART GAME</button>
 </div>
 
-<div id="gameArea"></div>
-
+<div class="stats">
+ <div class="stat">Level: <b id="level">1</b></div>
+ <div class="stat">⏱️ <b id="timer">60</b></div>
+ <div class="stat">🏆 <b id="score">0</b></div>
 </div>
+
+<div id="gameBox" class="gameBox"></div>
 
 </section>
+
+</div>
 
 <footer>🎮 GGames • Play. Have Fun. Repeat.</footer>
 
 <script>
 
+/* =========================
+   GAME LIST
+========================= */
+
 const games=[
-
-["football","⚽","Penalty Master","Replace the old clicker with a real penalty challenge.","Sports"],
-
-["penalty","🥅","Penalty Shootout","Beat the goalkeeper and score.","Sports"],
-["basketball","🏀","Basketball Hoops","Hit the moving hoop.","Sports"],
-["cricket","🏏","Cricket Hit","Time your cricket shots.","Sports"],
-["tennis","🎾","Tennis Smash","Return the ball.","Sports"],
-["keeper","🧤","Football Keeper","Save the incoming shots.","Sports"],
-["ranking","🏆","Footballer Ranking","Rank footballers from 1 to 10.","Sports"],
-
-["racing","🏎️","Racing","High-speed animated racing challenge.","Racing"],
-["traffic","🚗","Traffic Dodger","Dodge cars at speed.","Racing"],
-["highway","🛣️","Highway Rush","Survive the highway.","Racing"],
-["drift","💨","Drift Master","Collect drift points.","Racing"],
-["spaceDodge","🚀","Space Dodge","Avoid the asteroids.","Racing"],
-["falling","🧱","Falling Blocks","Survive the falling blocks.","Racing"],
-
-["guess","🔢","Number Guessing","Find the secret number.","Puzzle"],
-["memory","🧠","Memory Match","Match the hidden pairs.","Puzzle"],
-["merge","🔢","Number Merge","Reach bigger numbers.","Puzzle"],
-["word","🔤","Word Unscramble","Unscramble a different word every round.","Puzzle"],
-["math","➗","Math Challenge","Solve increasingly difficult maths.","Puzzle"],
-["reaction","⚡","Reaction Test","Test your reaction speed.","Puzzle"],
-["color","🌈","Color Match","Find the correct color.","Puzzle"],
-["pattern","🟦","Pattern Memory","Remember and recreate the pattern.","Puzzle"],
-
-["snake","🐍","Snake","Eat food and grow.","Arcade"],
-["breakout","🧱","Breakout","Destroy every block.","Arcade"],
-["flyer","🐦","Sky Flyer","Fly through the gaps.","Arcade"],
-["jumper","🦘","Endless Jumper","Jump and survive.","Arcade"],
-["coins","🪙","Coin Collector","Collect falling coins.","Arcade"],
-["bubble","🫧","Bubble Pop","Pop bubbles before time runs out.","Arcade"],
-["shooter","🚀","Space Shooter","Destroy incoming enemies.","Arcade"],
-["maze","🌀","Maze Escape","Find your way out.","Arcade"],
-["target","🎯","Tap the Target","Hit targets quickly.","Arcade"],
-["stack","🏗️","Stack Tower","Build your tower.","Arcade"],
-
-["rps","✊","Rock Paper Scissors","Challenge the computer.","Quick"],
-["ttt","❌⭕","Tic-Tac-Toe","Classic X and O.","Quick"],
-["mole","🐹","Whack-a-Mole","Hit the mole.","Quick"],
-["stars","⭐","Catch the Stars","Catch falling stars.","Quick"],
-["meteor","☄️","Meteor Dodge","Dodge the meteors.","Quick"],
-["typing","⌨️","Typing Speed","Type the words quickly.","Quick"],
-
-["topanswer","🔎","Guess the Top Answer","Guess the popular answer to the question.","Quick"]
-
+["⚽","Penalty Master","sports","arcade"],
+["🥅","Penalty Shootout","sports","arcade"],
+["🏀","Basketball Hoops","sports","quick"],
+["🏏","Cricket Hit","sports","arcade"],
+["🎾","Tennis Smash","sports","quick"],
+["🧤","Football Keeper","sports","arcade"],
+["🏆","Footballer Ranking","sports","puzzle"],
+["🏎️","Racing","racing","arcade"],
+["🚗","Traffic Dodger","racing","arcade"],
+["🛣️","Highway Rush","racing","arcade"],
+["💨","Drift Master","racing","arcade"],
+["🚀","Space Dodge","arcade","quick"],
+["🧱","Falling Blocks","arcade","quick"],
+["🔢","Number Guessing","puzzle","quick"],
+["🧠","Memory Match","puzzle","quick"],
+["🔢","Number Merge","puzzle","arcade"],
+["🔤","Word Unscramble","puzzle","quick"],
+["➗","Math Challenge","puzzle","quick"],
+["⚡","Reaction Test","quick","arcade"],
+["🎨","Color Match","puzzle","quick"],
+["🟦","Pattern Memory","puzzle","quick"],
+["🐍","Snake","arcade","quick"],
+["🧱","Breakout","arcade","quick"],
+["✈️","Sky Flyer","arcade","quick"],
+["🦘","Endless Jumper","arcade","quick"],
+["🪙","Coin Collector","arcade","quick"],
+["🫧","Bubble Pop","arcade","quick"],
+["👾","Space Shooter","arcade","quick"],
+["🌀","Maze Escape","puzzle","quick"],
+["🎯","Tap The Target","quick","arcade"],
+["🏗️","Stack Tower","arcade","quick"],
+["✊","Rock Paper Scissors","quick","puzzle"],
+["⭕","Tic Tac Toe","quick","puzzle"],
+["🔨","Whack A Mole","arcade","quick"],
+["⭐","Catch The Stars","arcade","quick"],
+["☄️","Meteor Dodge","arcade","quick"]
 ];
 
-let currentFilter="All";
 let currentGame="";
-let level=1;
+let currentLevel=1;
 let score=0;
-let timer=60;
+let time=60;
 let timerID=null;
-let gameOver=false;
 let animationID=null;
-let keys={};
+let currentCategory="all";
 
-document.addEventListener("keydown",e=>{
-keys[e.key.toLowerCase()]=true;
-});
+const grid=document.getElementById("gameGrid");
+const search=document.getElementById("search");
 
-document.addEventListener("keyup",e=>{
-keys[e.key.toLowerCase()]=false;
-});
+/* =========================
+   RENDER GAMES
+========================= */
 
-function renderGames(list=games){
+function renderGames(){
+ grid.innerHTML="";
 
-const box=document.getElementById("games");
+ const text=search.value.toLowerCase();
 
-box.innerHTML="";
+ games.forEach((g,i)=>{
+   const name=g[1].toLowerCase();
 
-list.forEach((g,i)=>{
+   if(
+    (currentCategory==="all" ||
+     g[2]===currentCategory ||
+     g[3]===currentCategory) &&
+    name.includes(text)
+   ){
+    const card=document.createElement("div");
+    card.className="card";
 
-box.innerHTML+=`
+    card.innerHTML=
+      `<div class="icon">${g[0]}</div>
+       <h3>${g[1]}</h3>
+       <p>Levels 1–10 • Timer</p>
+       <div class="play">PLAY ▶</div>`;
 
-<div class="card" style="animation-delay:${i*0.025}s">
+    card.onclick=()=>openGame(i);
+    grid.appendChild(card);
+   }
+ });
+}
 
-<div class="icon">${g[1]}</div>
+search.addEventListener("input",renderGames);
 
-<h3>${g[2]}</h3>
-
-<p>${g[3]}</p>
-
-<button class="play" onclick="openGame('${g[0]}')">
-PLAY NOW →
-</button>
-
-</div>
-
-`;
-
-});
-
+function filterGames(category){
+ currentCategory=category;
+ renderGames();
 }
 
 renderGames();
 
-function filterGames(category,btn){
+/* =========================
+   GAME SYSTEM
+========================= */
 
-currentFilter=category;
+function openGame(index){
+ stopEverything();
 
-document.querySelectorAll(".cat")
-.forEach(x=>x.classList.remove("active"));
+ currentGame=index;
+ currentLevel=1;
+ score=0;
 
-btn.classList.add("active");
+ document.getElementById("homeScreen").style.display="none";
+ document.getElementById("gameScreen").style.display="block";
 
-const list=category==="All"
-?games
-:games.filter(g=>g[4]===category);
+ document.getElementById("level").textContent=currentLevel;
+ document.getElementById("score").textContent=score;
 
-renderGames(list);
-
-}
-
-function searchGames(){
-
-const q=document.getElementById("search").value.toLowerCase();
-
-const list=games.filter(g=>
-(currentFilter==="All"||g[4]===currentFilter)&&
-(g[2].toLowerCase().includes(q)||
-g[3].toLowerCase().includes(q))
-);
-
-renderGames(list);
-
-}
-
-function updateStats(){
-
-document.getElementById("levelDisplay").textContent=
-"LEVEL "+level;
-
-document.getElementById("timerDisplay").textContent=
-"⏱️ "+timer;
-
-document.getElementById("scoreDisplay").textContent=
-"🏆 "+score;
-
-if(timer<=10)
-document.getElementById("timerDisplay").classList.add("timerDanger");
-else
-document.getElementById("timerDisplay").classList.remove("timerDanger");
-
-}
-
-function startTimer(seconds=60){
-
-clearInterval(timerID);
-
-timer=seconds;
-
-updateStats();
-
-timerID=setInterval(()=>{
-
-if(gameOver)return;
-
-timer--;
-
-updateStats();
-
-if(timer<=0){
-
-gameOver=true;
-
-clearInterval(timerID);
-
-msg("⏰ TIME UP! Score: "+score);
-
-}
-
-},1000);
-
-}
-
-function stopEverything(){
-
-clearInterval(timerID);
-
-if(animationID)
-cancelAnimationFrame(animationID);
-
-animationID=null;
-
-gameOver=true;
-
-}
-
-function openGame(id){
-
-stopEverything();
-
-currentGame=id;
-
-level=1;
-score=0;
-gameOver=false;
-
-document.getElementById("home").style.display="none";
-
-document.querySelector("header").style.display="none";
-
-document.querySelector("footer").style.display="none";
-
-document.getElementById("gameScreen").style.display="block";
-
-const g=games.find(x=>x[0]===id);
-
-document.getElementById("gameTitle").textContent=
-g[1]+" "+g[2];
-
-document.getElementById("gameInfo").textContent=
-g[3];
-
-document.getElementById("gameArea").innerHTML="";
-
-updateStats();
-
-window.scrollTo(0,0);
-
-startGame(id);
-
+ startTimer();
+ loadGame();
 }
 
 function restartGame(){
-
-openGame(currentGame);
-
+ stopEverything();
+ score=0;
+ currentLevel=1;
+ document.getElementById("level").textContent=1;
+ document.getElementById("score").textContent=0;
+ startTimer();
+ loadGame();
 }
 
 function goHome(){
-
-stopEverything();
-
-document.getElementById("gameScreen").style.display="none";
-
-document.getElementById("home").style.display="block";
-
-document.querySelector("header").style.display="flex";
-
-document.querySelector("footer").style.display="block";
-
-document.getElementById("gameArea").innerHTML="";
-
-window.scrollTo(0,0);
-
+ stopEverything();
+ document.getElementById("gameScreen").style.display="none";
+ document.getElementById("homeScreen").style.display="block";
 }
 
-function canvasGame(width=700,height=430){
-
-const c=document.createElement("canvas");
-
-c.width=width;
-c.height=height;
-
-document.getElementById("gameArea").appendChild(c);
-
-return c;
-
+function stopEverything(){
+ if(timerID) clearInterval(timerID);
+ if(animationID) cancelAnimationFrame(animationID);
+ timerID=null;
+ animationID=null;
+ document.onkeydown=null;
 }
 
-function button(text,fn,extra=""){
+function startTimer(){
+ if(timerID) clearInterval(timerID);
 
-const b=document.createElement("button");
+ time=Math.max(15,60-(currentLevel-1)*4);
+ document.getElementById("timer").textContent=time;
 
-b.className="action "+extra;
+ timerID=setInterval(()=>{
+  time--;
+  document.getElementById("timer").textContent=time;
 
-b.textContent=text;
-
-b.onclick=fn;
-
-document.getElementById("gameArea").appendChild(b);
-
-return b;
-
+  if(time<=0){
+   clearInterval(timerID);
+   timerID=null;
+   document.getElementById("gameBox").innerHTML+=
+    `<div class="message">⏰ Time's up!</div>
+     <button class="gameButton" onclick="restartGame()">🔄 RESTART GAME</button>`;
+  }
+ },1000);
 }
 
-function restartButton(){
-
-button("🔄 RESTART GAME",restartGame,"restart");
-
+function updateScore(n){
+ score+=n;
+ document.getElementById("score").textContent=score;
 }
-
-function msg(text){
-
-const d=document.getElementById("gameMessage");
-
-if(d)
-d.textContent=text;
-else{
-
-const n=document.createElement("div");
-
-n.id="gameMessage";
-n.className="message";
-
-n.textContent=text;
-
-document.getElementById("gameArea").appendChild(n);
-
-}
-
-}
-
-/* LEVEL SYSTEM */
 
 function nextLevel(){
-
-level++;
-
-if(level>10){
-
-gameOver=true;
-
-clearInterval(timerID);
-
-msg("🏆 LEVEL 10 COMPLETE! YOU BEAT THE GAME!");
-
-return false;
-
-}
-
-timer=Math.max(12,60-(level-1)*4);
-
-updateStats();
-
-return true;
-
-}
-
-/* START GAME */
-
-function startGame(id){
-
-switch(id){
-
-/* FOOTBALL MASTER */
-
-case"football":{
-
-const c=canvasGame();
-
-const x=c.getContext("2d");
-
-let ballX=350;
-
-let keeperX=350;
-
-let direction=1;
-
-let shots=0;
-
-c.onclick=e=>{
-
-if(gameOver)return;
-
-shots++;
-
-if(Math.abs(e.offsetX-keeperX)>55){
-
-score+=10;
-
-msg("⚽ GOAL! +10");
-
-}else{
-
-msg("🧤 SAVED!");
-
-}
-
-updateStats();
-
-if(shots>=5){
-
-if(nextLevel()){
-
-shots=0;
-
-msg("🔥 LEVEL "+level+" — goalkeeper is faster!");
-
-}
-
-}
-
-};
-
-function draw(){
-
-x.clearRect(0,0,700,430);
-
-x.fillStyle="#124c29";
-
-x.fillRect(0,0,700,430);
-
-x.strokeStyle="white";
-
-x.lineWidth=4;
-
-x.strokeRect(120,40,460,260);
-
-x.fillStyle="white";
-
-x.fillRect(keeperX-45,90,90,12);
-
-x.font="60px Arial";
-
-x.fillText("🧤",keeperX-30,155);
-
-x.font="55px Arial";
-
-x.fillText("⚽",ballX-27,350);
-
-keeperX+=direction*(2+level*.6);
-
-if(keeperX>530||keeperX<170)
-direction*=-1;
-
-animationID=requestAnimationFrame(draw);
-
-}
-
-draw();
-
-msg("Click where you want to shoot!");
-
-restartButton();
-
-break;
-
-}
-
-/* PENALTY */
-
-case"penalty":{
-
-const c=canvasGame();
-
-const x=c.getContext("2d");
-
-let target=350;
-
-let attempts=0;
-
-c.onclick=e=>{
-
-if(gameOver)return;
-
-attempts++;
-
-if(Math.abs(e.offsetX-target)<55){
-
-score+=10;
-
-msg("🔥 GOAL! +10");
-
-}else{
-
-msg("🧤 SAVED!");
-
-}
-
-updateStats();
-
-target=70+Math.random()*560;
-
-if(attempts>=5){
-
-attempts=0;
-
-nextLevel();
-
-}
-
-};
-
-function draw(){
-
-x.clearRect(0,0,700,430);
-
-x.fillStyle="#164b28";
-
-x.fillRect(0,0,700,430);
-
-x.strokeStyle="white";
-
-x.strokeRect(100,40,500,300);
-
-x.font="55px Arial";
-
-x.fillText("🥅",target-27,120);
-
-x.font="55px Arial";
-
-x.fillText("⚽",320,350);
-
-x.font="20px Arial";
-
-x.fillText("LEVEL "+level,20,30);
-
-animationID=requestAnimationFrame(draw);
-
-}
-
-draw();
-
-restartButton();
-
-break;
-
-}
-
-/* BASKETBALL */
-
-case"basketball":{
-
-const c=canvasGame();
-
-const x=c.getContext("2d");
-
-let hoop=100;
-
-let dir=1;
-
-function draw(){
-
-x.clearRect(0,0,700,430);
-
-x.fillStyle="#202020";
-
-x.fillRect(0,0,700,430);
-
-x.fillStyle="#ff6333";
-
-x.beginPath();
-
-x.arc(hoop,100,35,0,Math.PI*2);
-
-x.fill();
-
-x.font="70px Arial";
-
-x.fillText("🏀",320,340);
-
-hoop+=dir*(2+level*.5);
-
-if(hoop>620||hoop<80)dir*=-1;
-
-animationID=requestAnimationFrame(draw);
-
-}
-
-c.onclick=e=>{
-
-if(Math.abs(e.offsetX-hoop)<55){
-
-score+=10;
-
-msg("🏀 HOOP!");
-
-if(score>=level*30){
-
-if(nextLevel())msg("🔥 LEVEL "+level);
-
-}
-
-}else msg("MISS!");
-
-updateStats();
-
-};
-
-draw();
-
-restartButton();
-
-break;
-
-}
-
-/* CRICKET */
-
-case"cricket":{
-
-const c=canvasGame();
-
-const x=c.getContext("2d");
-
-let target=350;
-
-let hits=0;
-
-c.onclick=e=>{
-
-if(gameOver)return;
-
-if(Math.abs(e.offsetX-target)<70){
-
-score+=6;
-
-msg("🏏 SIX!");
-
-hits++;
-
-}else msg("MISS!");
-
-updateStats();
-
-target=80+Math.random()*540;
-
-if(hits>=5){
-
-hits=0;
-
-nextLevel();
-
-}
-
-};
-
-function draw(){
-
-x.clearRect(0,0,700,430);
-
-x.fillStyle="#174c28";
-
-x.fillRect(0,0,700,430);
-
-x.font="90px Arial";
-
-x.fillText("🏏",300,280);
-
-x.font="25px Arial";
-
-x.fillText("Target: "+Math.round(target),270,60);
-
-animationID=requestAnimationFrame(draw);
-
-}
-
-draw();
-
-restartButton();
-
-break;
-
-}
-
-/* TENNIS */
-
-case"tennis":{
-
-const c=canvasGame();
-
-const x=c.getContext("2d");
-
-let ball={x:100,y:200,dx:4+level,dy:2};
-
-let paddle=180;
-
-function draw(){
-
-x.clearRect(0,0,700,430);
-
-x.fillStyle="#124126";
-
-x.fillRect(0,0,700,430);
-
-x.fillStyle="white";
-
-x.fillRect(650,paddle,12,100);
-
-x.font="40px Arial";
-
-x.fillText("🎾",ball.x,ball.y);
-
-ball.x+=ball.dx;
-
-ball.y+=ball.dy;
-
-if(ball.y<20||ball.y>400)
-ball.dy*=-1;
-
-if(ball.x>620&&ball.y>paddle-20&&ball.y<paddle+120){
-
-ball.dx=-Math.abs(ball.dx);
-
-score++;
-
-if(score%10===0)nextLevel();
-
-updateStats();
-
-}
-
-if(ball.x>700){
-
-ball={x:100,y:200,dx:4+level,dy:2};
-
-}
-
-animationID=requestAnimationFrame(draw);
-
-}
-
-document.onmousemove=e=>{
-
-paddle=Math.max(0,Math.min(320,e.clientY-120));
-
-};
-
-draw();
-
-restartButton();
-
-break;
-
-}
-
-/* KEEPER */
-
-case"keeper":{
-
-const c=canvasGame();
-
-const x=c.getContext("2d");
-
-let ballX=350;
-
-let ballY=40;
-
-let saves=0;
-
-c.onclick=e=>{
-
-if(Math.abs(e.offsetX-ballX)<60){
-
-score+=10;
-
-saves++;
-
-msg("🧤 SAVE!");
-
-}else msg("⚽ GOAL!");
-
-updateStats();
-
-ballX=60+Math.random()*580;
-
-ballY=40;
-
-if(saves>=5){
-
-saves=0;
-
-nextLevel();
-
-}
-
-};
-
-function draw(){
-
-x.clearRect(0,0,700,430);
-
-x.fillStyle="#164b28";
-
-x.fillRect(0,0,700,430);
-
-x.font="60px Arial";
-
-x.fillText("🥅",300,110);
-
-x.font="40px Arial";
-
-x.fillText("⚽",ballX,ballY);
-
-ballY+=2+level*.5;
-
-if(ballY>430){
-
-ballY=40;
-
-ballX=60+Math.random()*580;
-
-}
-
-animationID=requestAnimationFrame(draw);
-
-}
-
-draw();
-
-restartButton();
-
-break;
-
-}
-
-/* FOOTBALL RANKING */
-
-case"ranking":{
-
-const players=[
-
-"Ronaldo","Messi","Mbappe","Vinicius","Haaland",
-"Bellingham","Neymar","Salah","De Bruyne","Yamal",
-"Modric","Benzema","Kane","Rodri","Saka",
-"Son","Pedri","Foden","Kvaratskhelia","Wirtz"
-
-];
-
-let chosen=[];
-
-function newRound(){
-
-chosen=[];
-
-document.getElementById("gameArea").innerHTML=`
-
-<div class="message">
-Rank each footballer from 1 to 10.
-Your ranking is just for fun!
-</div>
-
-<div class="rankGrid" id="rankGrid"></div>
-
-<div class="rankPlayers" id="rankPlayers"></div>
-
-`;
-
-for(let i=1;i<=10;i++){
-
-const d=document.createElement("div");
-
-d.className="rankSlot";
-
-d.id="slot"+i;
-
-d.textContent=i+". EMPTY";
-
-document.getElementById("rankGrid").appendChild(d);
-
-}
-
-let shuffled=[...players].sort(()=>Math.random()-.5).slice(0,10);
-
-shuffled.forEach(p=>{
-
-const b=document.createElement("button");
-
-b.className="playerBtn";
-
-b.textContent=p;
-
-b.onclick=()=>{
-
-if(chosen.length>=10)return;
-
-chosen.push(p);
-
-document.getElementById("slot"+chosen.length).textContent=
-chosen.length+". "+p;
-
-b.disabled=true;
-
-if(chosen.length===10){
-
-score+=10;
-
-msg("🏆 Ranking complete!");
-
-updateStats();
-
-}
-
-};
-
-document.getElementById("rankPlayers").appendChild(b);
-
-});
-
-}
-
-newRound();
-
-restartButton();
-
-break;
-
-}
-
-/* RACING */
-
-case"racing":
-case"traffic":
-case"highway":
-case"drift":{
-
-const c=canvasGame();
-
-const x=c.getContext("2d");
-
-let carX=350;
-
-let roadOffset=0;
-
-let obstacles=[];
-
-let particles=[];
-
-let distance=0;
-
-function spawn(){
-
-obstacles.push({
-
-x:180+Math.random()*340,
-
-y:-80,
-
-speed:4+level*.7,
-
-type:Math.random()>.5?"🚙":"🚗"
-
-});
-
-}
-
-function draw(){
-
-x.clearRect(0,0,700,430);
-
-const grd=x.createLinearGradient(0,0,0,430);
-
-grd.addColorStop(0,"#101522");
-
-grd.addColorStop(1,"#05070d");
-
-x.fillStyle=grd;
-
-x.fillRect(0,0,700,430);
-
-/* road */
-
-x.fillStyle="#252735";
-
-x.fillRect(120,0,460,430);
-
-/* road glow */
-
-x.strokeStyle="#666a8a";
-
-x.lineWidth=5;
-
-x.strokeRect(120,0,460,430);
-
-/* animated road lines */
-
-roadOffset+=8+level;
-
-for(let y=-60+roadOffset%80;y<430;y+=80){
-
-x.fillStyle="#eeeeee";
-
-x.fillRect(345,y,10,42);
-
-}
-
-/* city lights */
-
-for(let y=20;y<430;y+=55){
-
-x.fillStyle="#7466ff";
-
-x.fillRect(50,y,5,5);
-
-x.fillStyle="#4eeaff";
-
-x.fillRect(640,y+20,5,5);
-
-}
-
-/* controls */
-
-if(keys.arrowleft||keys.a)
-carX-=7;
-
-if(keys.arrowright||keys.d)
-carX+=7;
-
-carX=Math.max(150,Math.min(505,carX));
-
-/* obstacles */
-
-if(Math.random()<.025+level*.002)
-spawn();
-
-obstacles.forEach(o=>{
-
-o.y+=o.speed;
-
-x.font="45px Arial";
-
-x.fillText(o.type,o.x,o.y);
-
-});
-
-/* particles */
-
-if(Math.random()<.35){
-
-particles.push({
-
-x:carX,
-
-y:390,
-
-life:20
-
-});
-
-}
-
-particles.forEach(p=>{
-
-p.y+=4;
-
-p.life--;
-
-x.fillStyle="#a58cff";
-
-x.fillRect(p.x,p.y,4,8);
-
-});
-
-particles=particles.filter(p=>p.life>0);
-
-/* player */
-
-x.shadowBlur=25;
-
-x.shadowColor="#765cff";
-
-x.font="55px Arial";
-
-x.fillText("🏎️",carX-28,385);
-
-x.shadowBlur=0;
-
-/* collision */
-
-obstacles.forEach(o=>{
-
-if(Math.abs(o.x-carX)<45&&Math.abs(o.y-380)<50){
-
-msg("💥 CRASH! Press RESTART.");
-
-gameOver=true;
-
-}
-
-});
-
-obstacles=obstacles.filter(o=>o.y<470);
-
-distance++;
-
-if(distance%300===0){
-
-if(nextLevel())msg("🔥 LEVEL "+level+" — SPEED UP!");
-
-}
-
-x.fillStyle="white";
-
-x.font="18px Arial";
-
-x.fillText("← → / A D",20,405);
-
-animationID=requestAnimationFrame(draw);
-
-}
-
-draw();
-
-restartButton();
-
-break;
-
-}
-
-/* SPACE DODGE */
-
-case"spaceDodge":
-case"meteor":{
-
-const c=canvasGame();
-
-const x=c.getContext("2d");
-
-let px=350;
-
-let rocks=[];
-
-function draw(){
-
-x.fillStyle="#03030d";
-
-x.fillRect(0,0,700,430);
-
-if(keys.arrowleft||keys.a)px-=7;
-
-if(keys.arrowright||keys.d)px+=7;
-
-px=Math.max(20,Math.min(680,px));
-
-if(Math.random()<.035+level*.003)
-rocks.push({x:Math.random()*700,y:-30,s:4+level*.5});
-
-rocks.forEach(r=>{
-
-r.y+=r.s;
-
-x.font="35px Arial";
-
-x.fillText("☄️",r.x,r.y);
-
-});
-
-x.font="45px Arial";
-
-x.fillText("🚀",px-22,390);
-
-rocks.forEach(r=>{
-
-if(Math.abs(r.x-px)<35&&Math.abs(r.y-390)<40){
-
-gameOver=true;
-
-msg("💥 HIT! Score: "+score);
-
-}
-
-});
-
-rocks=rocks.filter(r=>r.y<460);
-
-score++;
-
-if(score%250===0)nextLevel();
-
-updateStats();
-
-animationID=requestAnimationFrame(draw);
-
-}
-
-draw();
-
-restartButton();
-
-break;
-
-}
-
-/* FALLING */
-
-case"falling":{
-
-const c=canvasGame();
-
-const x=c.getContext("2d");
-
-let px=330;
-
-let blocks=[];
-
-function draw(){
-
-x.clearRect(0,0,700,430);
-
-if(keys.arrowleft)px-=7;
-
-if(keys.arrowright)px+=7;
-
-px=Math.max(0,Math.min(650,px));
-
-if(Math.random()<.04+level*.002)
-blocks.push({x:Math.random()*660,y:-30,s:3+level*.4});
-
-blocks.forEach(b=>b.y+=b.s);
-
-x.fillStyle="#7560ff";
-
-x.fillRect(px,380,50,25);
-
-x.fillStyle="#ff5577";
-
-blocks.forEach(b=>x.fillRect(b.x,b.y,35,35));
-
-blocks.forEach(b=>{
-
-if(Math.abs(b.x-px)<40&&Math.abs(b.y-380)<35){
-
-gameOver=true;
-
-msg("💥 HIT!");
-
-}
-
-});
-
-score++;
-
-if(score%300===0)nextLevel();
-
-updateStats();
-
-animationID=requestAnimationFrame(draw);
-
-}
-
-draw();
-
-restartButton();
-
-break;
-
-}
-
-/* NUMBER GUESS */
-
-case"guess":{
-
-let secret=Math.floor(Math.random()*100)+1;
-
-let attempts=0;
-
-document.getElementById("gameArea").innerHTML=`
-
-<input id="guessInput" class="textInput"
-type="number" placeholder="1 - 100">
-
-<button class="action" onclick="guessNumber()">GUESS</button>
-
-<div class="message" id="guessMsg">Find the number!</div>
-
-`;
-
-window.guessNumber=()=>{
-
-if(gameOver)return;
-
-const v=Number(document.getElementById("guessInput").value);
-
-attempts++;
-
-if(v===secret){
-
-score+=10;
-
-document.getElementById("guessMsg").textContent=
-"🎉 CORRECT!";
-
-updateStats();
-
-if(nextLevel()){
-
-secret=Math.floor(Math.random()*100)+1;
-
-attempts=0;
-
-document.getElementById("guessInput").value="";
-
-document.getElementById("guessMsg").textContent=
-"🔥 LEVEL "+level+" — NEW NUMBER!";
-
-}
-
-}else{
-
-document.getElementById("guessMsg").textContent=
-v<secret?"⬆️ TOO LOW!":"⬇️ TOO HIGH!";
-
-}
-
-};
-
-restartButton();
-
-break;
-
-}
-
-/* MEMORY */
-
-case"memory":{
-
-let values=[];
-
-let first=null;
-
-let lock=false;
-
-let matches=0;
-
-function newPattern(){
-
-const emojis=["🍎","🚀","⭐","🍕","⚽","🐱","🔥","🎮"];
-
-const needed=Math.min(2+level,8);
-
-let base=emojis.slice(0,needed);
-
-values=[...base,...base].sort(()=>Math.random()-.5);
-
-matches=0;
-
-first=null;
-
-lock=false;
-
-document.getElementById("gameArea").innerHTML=`
-
-<div class="levelBox">
-Remember the pattern. Then recreate it!
-</div>
-
-<div id="memoryGrid"
-style="
-display:grid;
-grid-template-columns:repeat(4,90px);
-gap:10px;
-justify-content:center;
-">
-</div>
-
-<div id="memoryMessage" class="message">
-Memorize!
-</div>
-
-`;
-
-const grid=document.getElementById("memoryGrid");
-
-values.forEach((v,i)=>{
-
-const b=document.createElement("button");
-
-b.className="choice";
-
-b.style.height="75px";
-
-b.textContent=v;
-
-b.dataset.value=v;
-
-b.disabled=true;
-
-grid.appendChild(b);
-
-});
-
-setTimeout(()=>{
-
-grid.querySelectorAll("button").forEach(b=>{
-b.textContent="❓";
-b.disabled=false;
-});
-
-document.getElementById("memoryMessage").textContent=
-"Pattern scrambled! Match the pairs.";
-
-},Math.max(900,2200-level*120));
-
-}
-
-document.getElementById("gameArea").innerHTML="";
-
-newPattern();
-
-document.getElementById("gameArea").insertAdjacentHTML(
-"beforeend",
-'<button class="action restart" id="memoryRestart">🔄 RESTART GAME</button>'
-);
-
-document.getElementById("memoryRestart").onclick=restartGame;
-
-document.getElementById("memoryGrid").onclick=e=>{
-
-const b=e.target.closest("button");
-
-if(!b||lock||b.disabled)return;
-
-b.textContent=b.dataset.value;
-
-if(!first){
-
-first=b;
-
-return;
-
-}
-
-if(first===b){
-
-first.disabled=true;
-
-b.disabled=true;
-
-first=null;
-
-matches++;
-
-score+=5;
-
-updateStats();
-
-if(matches===values.length/2){
-
-if(nextLevel()){
-
-setTimeout(newPattern,500);
-
-}
-
-}
-
-}else{
-
-lock=true;
-
-setTimeout(()=>{
-
-first.textContent="❓";
-
-b.textContent="❓";
-
-first=null;
-
-lock=false;
-
-},600);
-
-}
-
-};
-
-break;
-
-}
-
-/* MERGE */
-
-case"merge":{
-
-let value=2;
-
-document.getElementById("gameArea").innerHTML=`
-
-<div class="bigNumber" id="mergeN">2</div>
-
-<button class="action" onclick="mergeGame()">MERGE</button>
-
-<div class="message" id="mergeM">
-Reach the target!
-</div>
-
-`;
-
-window.mergeGame=()=>{
-
-if(gameOver)return;
-
-value*=2;
-
-score+=value;
-
-document.getElementById("mergeN").textContent=value;
-
-updateStats();
-
-if(value>=Math.pow(2,level+1)){
-
-if(nextLevel()){
-
-value=2;
-
-document.getElementById("mergeN").textContent=value;
-
-}
-
-}
-
-};
-
-restartButton();
-
-break;
-
-}
-
-/* WORD UNSCRAMBLE */
-
-case"word":{
-
-const words=[
-
-"ROCKET","FOOTBALL","COMPUTER","GAMES",
-"PLAYER","VICTORY","MYSTERY","STADIUM",
-"CHAMPION","THUNDER","GALAXY","DRIBBLE",
-"GOALKEEPER","CRICKET","BASKETBALL"
-
-];
-
-let word="";
-
-function newWord(){
-
-word=words[Math.floor(Math.random()*words.length)];
-
-let scrambled=word;
-
-while(scrambled===word){
-
-scrambled=word.split("").sort(()=>Math.random()-.5).join("");
-
-}
-
-document.getElementById("gameArea").innerHTML=`
-
-<div class="bigNumber">${scrambled}</div>
-
-<input id="wordInput" class="textInput"
-placeholder="Unscramble it">
-
-<button class="action" id="wordCheck">
-CHECK
-</button>
-
-<div class="message" id="wordM"></div>
-
-`;
-
-document.getElementById("wordCheck").onclick=()=>{
-
-if(gameOver)return;
-
-const answer=document.getElementById("wordInput").value
-.toUpperCase()
-.trim();
-
-if(answer===word){
-
-score+=10;
-
-updateStats();
-
-document.getElementById("wordM").textContent=
-"🔥 CORRECT!";
-
-if(nextLevel()){
-
-setTimeout(newWord,500);
-
-}
-
-}else{
-
-document.getElementById("wordM").textContent=
-"❌ TRY AGAIN!";
-
-}
-
-};
-
-}
-
-newWord();
-
-restartButton();
-
-break;
-
-}
-
-/* MATH */
-
-case"math":{
-
-let answer;
-
-function newQuestion(){
-
-let max=10+level*8;
-
-let a=Math.floor(Math.random()*max)+1;
-
-let b=Math.floor(Math.random()*max)+1;
-
-let ops=["+","-","×"];
-
-let op=ops[Math.floor(Math.random()*ops.length)];
-
-if(op==="+")answer=a+b;
-
-if(op==="-")answer=a-b;
-
-if(op==="×")answer=a*b;
-
-document.getElementById("gameArea").innerHTML=`
-
-<div class="bigNumber">${a} ${op} ${b} = ?</div>
-
-<input id="mathInput" class="textInput" type="number">
-
-<button class="action" id="mathButton">
-ANSWER
-</button>
-
-<div class="message" id="mathM"></div>
-
-`;
-
-document.getElementById("mathButton").onclick=()=>{
-
-if(Number(document.getElementById("mathInput").value)===answer){
-
-score+=10;
-
-updateStats();
-
-if(nextLevel())newQuestion();
-
-}else{
-
-document.getElementById("mathM").textContent=
-"❌ WRONG!";
-
-}
-
-};
-
-}
-
-newQuestion();
-
-restartButton();
-
-break;
-
-}
-
-/* REACTION */
-
-case"reaction":{
-
-document.getElementById("gameArea").innerHTML=`
-
-<button class="action" id="reactionButton">
-WAIT...
-</button>
-
-<div class="message" id="reactionMessage"></div>
-
-`;
-
-const b=document.getElementById("reactionButton");
-
-let ready=false;
-
-let start=0;
-
-const delay=Math.random()*2500+1000;
-
-setTimeout(()=>{
-
-if(gameOver)return;
-
-ready=true;
-
-start=Date.now();
-
-b.textContent="CLICK NOW!";
-
-},delay);
-
-b.onclick=()=>{
-
-if(!ready){
-
-b.textContent="TOO EARLY!";
-
-return;
-
-}
-
-let ms=Date.now()-start;
-
-score+=Math.max(1,100-Math.floor(ms/10));
-
-document.getElementById("reactionMessage").textContent=
-"⚡ "+ms+" ms";
-
-updateStats();
-
-if(nextLevel()){
-
-setTimeout(()=>openGame(currentGame),700);
-
-}
-
-};
-
-restartButton();
-
-break;
-
-}
-
-/* COLOR */
-
-case"color":{
-
-const colors=["RED","BLUE","GREEN","YELLOW","PURPLE","ORANGE"];
-
-function round(){
-
-const answer=colors[Math.floor(Math.random()*colors.length)];
-
-document.getElementById("gameArea").innerHTML=`
-
-<div class="bigNumber">${answer}</div>
-
-<div class="message">
-Choose the correct answer.
-</div>
-
-`;
-
-colors.forEach(c=>{
-
-const b=document.createElement("button");
-
-b.className="choice";
-
-b.textContent=c;
-
-b.onclick=()=>{
-
-if(c===answer){
-
-score+=10;
-
-updateStats();
-
-if(nextLevel())round();
-
-}else{
-
-msg("❌ WRONG!");
-
-}
-
-};
-
-document.getElementById("gameArea").appendChild(b);
-
-});
-
-}
-
-round();
-
-restartButton();
-
-break;
-
-}
-
-/* PATTERN */
-
-case"pattern":{
-
-let sequence=[];
-
-let player=[];
-
-let showing=true;
-
-const colors=["🟥","🟦","🟩","🟨"];
-
-function createPattern(){
-
-sequence=[];
-
-player=[];
-
-showing=true;
-
-for(let i=0;i<level+2;i++)
-sequence.push(colors[Math.floor(Math.random()*4)]);
-
-document.getElementById("gameArea").innerHTML=`
-
-<div class="bigNumber" id="patternShow">
-${sequence.join(" ")}
-</div>
-
-<div class="message" id="patternM">
-Memorize this pattern...
-</div>
-
-`;
-
-setTimeout(()=>{
-
-document.getElementById("patternShow").textContent="❓ ❓ ❓";
-
-document.getElementById("patternM").textContent=
-"CLICK I REMEMBER — then recreate it!";
-
-button("I REMEMBER",()=>{
-
-showing=false;
-
-document.getElementById("gameArea").innerHTML=`
-
-<div class="message">
-Level ${level}: recreate the pattern
-</div>
-
-<div id="patternButtons"></div>
-
-<div class="message" id="patternM"></div>
-
-`;
-
-colors.forEach(c=>{
-
-const b=document.createElement("button");
-
-b.className="action";
-
-b.textContent=c;
-
-b.onclick=()=>{
-
-if(showing||gameOver)return;
-
-player.push(c);
-
-document.getElementById("patternM").textContent=
-player.join(" ");
-
-if(player[player.length-1]!==sequence[player.length-1]){
-
-msg("❌ WRONG PATTERN! Restart to try again.");
-
-gameOver=true;
-
-return;
-
-}
-
-if(player.length===sequence.length){
-
-score+=level*10;
-
-updateStats();
-
-if(nextLevel()){
-
-setTimeout(createPattern,500);
-
-}
-
-}
-
-};
-
-document.getElementById("patternButtons").appendChild(b);
-
-});
-
-restartButton();
-
-},Math.max(1200,2600-level*120));
-
-}
-
-createPattern();
-
-break;
-
-}
-
-/* SNAKE */
-
-case"snake":{
-
-const c=canvasGame(600,400);
-
-const x=c.getContext("2d");
-
-let snake=[{x:300,y:200}];
-
-let food={x:100,y:100};
-
-let dx=20;
-
-let dy=0;
-
-function keySnake(e){
-
-if(e.key==="ArrowUp"&&dy===0){dx=0;dy=-20}
-
-if(e.key==="ArrowDown"&&dy===0){dx=0;dy=20}
-
-if(e.key==="ArrowLeft"&&dx===0){dx=-20;dy=0}
-
-if(e.key==="ArrowRight"&&dx===0){dx=20;dy=0}
-
-}
-
-document.addEventListener("keydown",keySnake);
-
-function draw(){
-
-if(gameOver)return;
-
-x.fillStyle="#090914";
-
-x.fillRect(0,0,600,400);
-
-let head={
-x:snake[0].x+dx,
-y:snake[0].y+dy
-};
-
-if(
-head.x<0||
-head.x>=600||
-head.y<0||
-head.y>=400||
-snake.some(s=>s.x===head.x&&s.y===head.y)
-){
-
-gameOver=true;
-
-msg("🐍 GAME OVER! Score: "+score);
-
-return;
-
-}
-
-snake.unshift(head);
-
-if(head.x===food.x&&head.y===food.y){
-
-score++;
-
-if(score%5===0)nextLevel();
-
-food={
-x:Math.floor(Math.random()*30)*20,
-y:Math.floor(Math.random()*20)*20
-};
-
-}else snake.pop();
-
-x.fillStyle="#70ff83";
-
-snake.forEach(s=>x.fillRect(s.x,s.y,18,18));
-
-x.font="25px Arial";
-
-x.fillText("🍎",food.x,food.y+22);
-
-updateStats();
-
-setTimeout(()=>animationID=requestAnimationFrame(draw),Math.max(45,120-level*6));
-
-}
-
-draw();
-
-restartButton();
-
-break;
-
-}
-
-/* BREAKOUT */
-
-case"breakout":{
-
-const c=canvasGame();
-
-const x=c.getContext("2d");
-
-let paddle=300;
-
-let ball={x:350,y:350,dx:4+level*.3,dy:-4};
-
-let blocks=[];
-
-for(let r=0;r<3+Math.min(level,7);r++){
-
-for(let j=0;j<9;j++){
-
-blocks.push({
-x:45+j*70,
-y:50+r*27
-});
-
-}
-
-}
-
-function draw(){
-
-if(gameOver)return;
-
-x.clearRect(0,0,700,430);
-
-if(keys.arrowleft)paddle-=7;
-
-if(keys.arrowright)paddle+=7;
-
-paddle=Math.max(0,Math.min(620,paddle));
-
-x.fillStyle="#765cff";
-
-x.fillRect(paddle,390,80,12);
-
-x.font="20px Arial";
-
-blocks.forEach(b=>x.fillText("🧱",b.x,b.y));
-
-x.font="28px Arial";
-
-x.fillText("⚪",ball.x,ball.y);
-
-ball.x+=ball.dx;
-
-ball.y+=ball.dy;
-
-if(ball.x<0||ball.x>680)ball.dx*=-1;
-
-if(ball.y<0)ball.dy*=-1;
-
-if(ball.y>370&&ball.x>paddle&&ball.x<paddle+80)
-ball.dy=-Math.abs(ball.dy);
-
-blocks=blocks.filter(b=>{
-
-if(Math.abs(ball.x-b.x)<28&&Math.abs(ball.y-b.y)<22){
-
-ball.dy*=-1;
-
-score+=2;
-
-updateStats();
-
-return false;
-
-}
-
-return true;
-
-});
-
-if(ball.y>430){
-
-gameOver=true;
-
-msg("💥 GAME OVER!");
-
-return;
-
-}
-
-if(blocks.length===0){
-
-if(nextLevel()){
-
-msg("🔥 LEVEL "+level);
-
-}
-
-}
-
-animationID=requestAnimationFrame(draw);
-
-}
-
-draw();
-
-restartButton();
-
-break;
-
-}
-
-/* FLYER */
-
-case"flyer":{
-
-const c=canvasGame();
-
-const x=c.getContext("2d");
-
-let y=210;
-
-let vy=0;
-
-let pipe=700;
-
-let gap=150;
-
-function draw(){
-
-if(gameOver)return;
-
-x.fillStyle="#57c8ff";
-
-x.fillRect(0,0,700,430);
-
-vy+=.35;
-
-y+=vy;
-
-pipe-=4+level*.4;
-
-if(pipe<-80){
-
-pipe=700;
-
-score++;
-
-gap=Math.max(95,150-level*5);
-
-}
-
-x.fillStyle="#36a653";
-
-x.fillRect(pipe,0,70,150);
-
-x.fillRect(pipe,150+gap,70,280);
-
-x.font="40px Arial";
-
-x.fillText("🐦",100,y);
-
-if(
-
-y<0||
-y>430||
-(100>pipe&&100<pipe+70&&(y<150||y>150+gap))
-){
-
-gameOver=true;
-
-msg("🐦 GAME OVER!");
-
-return;
-
-}
-
-updateStats();
-
-animationID=requestAnimationFrame(draw);
-
-}
-
-c.onclick=()=>{
-
-vy=-7;
-
-};
-
-draw();
-
-restartButton();
-
-break;
-
-}
-
-/* JUMPER */
-
-case"jumper":{
-
-const c=canvasGame();
-
-const x=c.getContext("2d");
-
-let y=350;
-
-let vy=-10;
-
-function draw(){
-
-if(gameOver)return;
-
-x.clearRect(0,0,700,430);
-
-if(keys.arrowleft)y-=1;
-
-if(keys.arrowright)y+=1;
-
-vy+=.4;
-
-y+=vy;
-
-if(y>350){
-
-y=350;
-
-vy=-(10+level*.3);
-
-score++;
-
-}
-
-x.font="50px Arial";
-
-x.fillText("🦘",320,y);
-
-if(score>level*15)nextLevel();
-
-updateStats();
-
-animationID=requestAnimationFrame(draw);
-
-}
-
-draw();
-
-restartButton();
-
-break;
-
-}
-
-/* COINS / STARS */
-
-case"coins":
-case"stars":{
-
-const c=canvasGame();
-
-const x=c.getContext("2d");
-
-let px=350;
-
-let items=[];
-
-function draw(){
-
-if(gameOver)return;
-
-x.fillStyle="#090914";
-
-x.fillRect(0,0,700,430);
-
-if(keys.arrowleft)px-=7;
-
-if(keys.arrowright)px+=7;
-
-if(Math.random()<.04+level*.002)
-items.push({
-x:Math.random()*680,
-y:-30
-});
-
-items.forEach(i=>i.y+=4+level*.4);
-
-x.font="40px Arial";
-
-x.fillText("🧍",px,390);
-
-x.font="30px Arial";
-
-items.forEach(i=>
-x.fillText(currentGame==="stars"?"⭐":"🪙",i.x,i.y)
-);
-
-items=items.filter(i=>{
-
-if(Math.abs(i.x-px)<40&&Math.abs(i.y-390)<40){
-
-score++;
-
-if(score%5===0)nextLevel();
-
-return false;
-
-}
-
-return i.y<430;
-
-});
-
-updateStats();
-
-animationID=requestAnimationFrame(draw);
-
-}
-
-draw();
-
-restartButton();
-
-break;
-
-}
-
-/* BUBBLE */
-
-case"bubble":{
-
-const c=canvasGame();
-
-const x=c.getContext("2d");
-
-let bubbles=[];
-
-function draw(){
-
-x.clearRect(0,0,700,430);
-
-if(Math.random()<.05+level*.003){
-
-bubbles.push({
-
-x:20+Math.random()*660,
-y:40+Math.random()*350,
-r:15+Math.random()*25
-
-});
-
-}
-
-bubbles.forEach(b=>{
-
-x.beginPath();
-
-x.arc(b.x,b.y,b.r,0,Math.PI*2);
-
-x.strokeStyle="#b68cff";
-
-x.lineWidth=4;
-
-x.stroke();
-
-});
-
-x.font="20px Arial";
-
-x.fillStyle="white";
-
-x.fillText("Pop "+(5+level*2)+" bubbles!",20,30);
-
-if(score>=5+level*2){
-
-if(nextLevel()){
-
-bubbles=[];
-
-}
-
-}
-
-animationID=requestAnimationFrame(draw);
-
-}
-
-c.onclick=e=>{
-
-bubbles=bubbles.filter(b=>{
-
-if(Math.hypot(e.offsetX-b.x,e.offsetY-b.y)<b.r){
-
-score++;
-
-return false;
-
-}
-
-return true;
-
-});
-
-updateStats();
-
-};
-
-draw();
-
-restartButton();
-
-break;
-
-}
-
-/* SHOOTER */
-
-case"shooter":{
-
-const c=canvasGame();
-
-const x=c.getContext("2d");
-
-let px=350;
-
-let shots=[];
-
-let enemies=[];
-
-function draw(){
-
-if(gameOver)return;
-
-x.fillStyle="#050512";
-
-x.fillRect(0,0,700,430);
-
-if(keys.arrowleft)px-=7;
-
-if(keys.arrowright)px+=7;
-
-if(Math.random()<.025+level*.003)
-enemies.push({
-x:Math.random()*670,
-y:20
-});
-
-shots.forEach(s=>s.y-=8);
-
-enemies.forEach(e=>e.y+=2+level*.3);
-
-x.font="42px Arial";
-
-x.fillText("🚀",px,395);
-
-x.font="30px Arial";
-
-shots.forEach(s=>x.fillText("•",s.x,s.y));
-
-enemies.forEach(e=>x.fillText("👾",e.x,e.y));
-
-enemies=enemies.filter(e=>{
-
-let hit=shots.some(s=>
-Math.abs(s.x-e.x)<30&&
-Math.abs(s.y-e.y)<30
-);
-
-if(hit){
-
-score+=5;
-
-return false;
-
-}
-
-if(e.y>430){
-
-gameOver=true;
-
-msg("👾 ENEMY GOT THROUGH!");
-
-}
-
-return true;
-
-});
-
-if(score>=level*50)nextLevel();
-
-updateStats();
-
-animationID=requestAnimationFrame(draw);
-
-}
-
-document.onkeydown=e=>{
-
-if(e.key===" ")
-shots.push({x:px,y:370});
-
-};
-
-draw();
-
-restartButton();
-
-break;
-
-}
-
-/* MAZE */
-
-case"maze":{
-
-const c=canvasGame(500,500);
-
-const x=c.getContext("2d");
-
-let p={x:25,y:25};
-
-const walls=[
-
-{x:100,y:0,w:15,h:350},
-{x:200,y:150,w:15,h:350},
-{x:300,y:0,w:15,h:350},
-{x:400,y:150,w:15,h:350}
-
-];
-
-function draw(){
-
-if(gameOver)return;
-
-x.clearRect(0,0,500,500);
-
-x.fillStyle="#765cff";
-
-walls.forEach(w=>x.fillRect(w.x,w.y,w.w,w.h));
-
-x.font="30px Arial";
-
-x.fillText("🏁",440,480);
-
-x.font="35px Arial";
-
-x.fillText("🟢",p.x,p.y);
-
-if(keys.arrowleft)p.x-=3;
-
-if(keys.arrowright)p.x+=3;
-
-if(keys.arrowup)p.y-=3;
-
-if(keys.arrowdown)p.y+=3;
-
-p.x=Math.max(15,Math.min(470,p.x));
-
-p.y=Math.max(15,Math.min(470,p.y));
-
-if(p.x>430&&p.y>440){
-
-score+=10;
-
-if(nextLevel()){
-
-p={x:25,y:25};
-
-}
-
-}
-
-updateStats();
-
-animationID=requestAnimationFrame(draw);
-
-}
-
-draw();
-
-restartButton();
-
-break;
-
-}
-
-/* TARGET */
-
-case"target":{
-
-const c=canvasGame();
-
-const x=c.getContext("2d");
-
-let target={
-x:350,
-y:200
-};
-
-function draw(){
-
-x.clearRect(0,0,700,430);
-
-x.font=Math.max(35,65-level*2)+"px Arial";
-
-x.fillText("🎯",target.x-30,target.y+20);
-
-x.font="20px Arial";
-
-x.fillText("Hit "+(5+level)+" targets",20,30);
-
-animationID=requestAnimationFrame(draw);
-
-}
-
-c.onclick=e=>{
-
-if(
-Math.abs(e.offsetX-target.x)<50&&
-Math.abs(e.offsetY-target.y)<50
-){
-
-score++;
-
-target={
-x:50+Math.random()*600,
-y:70+Math.random()*300
-};
-
-if(score% (5+level)===0)nextLevel();
-
-updateStats();
-
-}
-
-};
-
-draw();
-
-restartButton();
-
-break;
-
-}
-
-/* STACK */
-
-case"stack":{
-
-const c=canvasGame();
-
-const x=c.getContext("2d");
-
-let width=160;
-
-let xpos=270;
-
-let dir=1;
-
-let tower=0;
-
-function draw(){
-
-x.clearRect(0,0,700,430);
-
-xpos+=dir*(3+level*.5);
-
-if(xpos<0||xpos+width>700)
-dir*=-1;
-
-for(let i=0;i<tower;i++){
-
-x.fillStyle=i%2?"#5d8cff":"#765cff";
-
-x.fillRect(
-350-width/2,
-380-i*25,
-width,
-22
-);
-
-}
-
-x.fillStyle="#a889ff";
-
-x.fillRect(xpos,380-tower*25,width,22);
-
-x.fillStyle="white";
-
-x.font="20px Arial";
-
-x.fillText("TOWER: "+tower,20,30);
-
-animationID=requestAnimationFrame(draw);
-
-}
-
-c.onclick=()=>{
-
-tower++;
-
-score+=5;
-
-width=Math.max(40,width-3);
-
-if(tower%5===0)nextLevel();
-
-updateStats();
-
-};
-
-draw();
-
-restartButton();
-
-break;
-
-}
-
-/* RPS */
-
-case"rps":{
-
-const choices=["✊","✋","✌️"];
-
-choices.forEach(c=>{
-
-const b=document.createElement("button");
-
-b.className="action";
-
-b.textContent=c;
-
-b.onclick=()=>{
-
-const ai=choices[Math.floor(Math.random()*3)];
-
-let result;
-
-if(c===ai)result="DRAW!";
-
-else if(
-(c==="✊"&&ai==="✌️")||
-(c==="✋"&&ai==="✊")||
-(c==="✌️"&&ai==="✋")
-){
-
-result="🔥 YOU WIN!";
-
-score+=10;
-
-}else result="COMPUTER WINS!";
-
-msg("You: "+c+" | Computer: "+ai+" | "+result);
-
-updateStats();
-
-};
-
-document.getElementById("gameArea").appendChild(b);
-
-});
-
-restartButton();
-
-break;
-
-}
-
-/* TIC TAC TOE */
-
-case"ttt":{
-
-let board=["","","","","","","","",""];
-
-let turn="X";
-
-document.getElementById("gameArea").innerHTML=`
-
-<div id="ttt"
-style="
-display:grid;
-grid-template-columns:repeat(3,100px);
-gap:8px;
-justify-content:center;
-">
-</div>
-
-`;
-
-function win(){
-
-const wins=[
-[0,1,2],[3,4,5],[6,7,8],
-[0,3,6],[1,4,7],[2,5,8],
-[0,4,8],[2,4,6]
-];
-
-return wins.some(w=>
-board[w[0]]&&
-board[w[0]]===board[w[1]]&&
-board[w[1]]===board[w[2]]
-);
-
-}
-
-board.forEach((_,i)=>{
-
-const b=document.createElement("button");
-
-b.className="choice";
-
-b.style.height="100px";
-
-b.onclick=()=>{
-
-if(board[i]||gameOver)return;
-
-board[i]=turn;
-
-b.textContent=turn;
-
-if(win()){
-
-score+=20;
-
-msg("🏆 "+turn+" WINS!");
-
-updateStats();
-
-gameOver=true;
-
-return;
-
-}
-
-turn=turn==="X"?"O":"X";
-
-};
-
-document.getElementById("ttt").appendChild(b);
-
-});
-
-restartButton();
-
-break;
-
-}
-
-/* MOLE */
-
-case"mole":{
-
-document.getElementById("gameArea").innerHTML=`
-
-<button id="moleBtn"
-class="action"
-style="font-size:50px;position:relative">
-🐹
-</button>
-
-<div id="moleM" class="message">
-Hit the mole!
-</div>
-
-`;
-
-const b=document.getElementById("moleBtn");
-
-b.onclick=()=>{
-
-if(gameOver)return;
-
-score++;
-
-b.style.marginLeft=Math.random()*500+"px";
-
-b.style.marginTop=Math.random()*180+"px";
-
-document.getElementById("moleM").textContent=
-"🔥 "+score;
-
-if(score%(5+level)===0)nextLevel();
-
-updateStats();
-
-};
-
-restartButton();
-
-break;
-
-}
-
-/* TYPING */
-
-case"typing":{
-
-const words=[
-
-"gaming","rocket","football","player",
-"ggames","victory","computer","arcade",
-"champion","stadium","racing","puzzle"
-
-];
-
-let word="";
-
-function newWord(){
-
-word=words[Math.floor(Math.random()*words.length)];
-
-document.getElementById("gameArea").innerHTML=`
-
-<div class="bigNumber" id="typeWord">${word}</div>
-
-<input id="typeInput"
-class="textInput"
-autofocus
-placeholder="Type it...">
-
-<div class="message" id="typeM">
-Score: 0
-</div>
-
-`;
-
-document.getElementById("typeInput").oninput=e=>{
-
-if(e.target.value.toLowerCase()===word){
-
-score+=10;
-
-e.target.value="";
-
-document.getElementById("typeM").textContent=
-"🔥 Correct! Score: "+score;
-
-updateStats();
-
-if(nextLevel())newWord();
-
-}
-
-};
-
-}
-
-newWord();
-
-restartButton();
-
-break;
-
-}
-
-/* TOP ANSWER */
-
-case"topanswer":{
-
-const questions=[
-
-{
-q:"A girl is ___?",
-answers:["Pretty","Smart","Funny","Kind"]
-},
-
-{
-q:"When people are hungry they want ___?",
-answers:["Food","Pizza","Burger","Water"]
-},
-
-{
-q:"A football player is wearing ___?",
-answers:["Boots","Jersey","Shorts","Gloves"]
-},
-
-{
-q:"When someone is tired they want to ___?",
-answers:["Sleep","Rest","Sit","Eat"]
-},
-
-{
-q:"A rainy day needs a ___?",
-answers:["Umbrella","Raincoat","Jacket","Boots"]
-},
-
-{
-q:"A gamer usually plays on a ___?",
-answers:["Computer","Console","Phone","Tablet"]
-},
-
-{
-q:"A birthday usually has ___?",
-answers:["Cake","Gifts","Friends","Candles"]
-},
-
-{
-q:"At school students use a ___?",
-answers:["Book","Pen","Pencil","Bag"]
-},
-
-{
-q:"A football match needs a ___?",
-answers:["Ball","Goal","Field","Players"]
-},
-
-{
-q:"On a hot day people want ___?",
-answers:["Water","Ice Cream","Juice","Shade"]
-}
-
-];
-
-let qIndex=0;
-
-function question(){
-
-const q=questions[qIndex];
-
-document.getElementById("gameArea").innerHTML=`
-
-<div class="levelBox">
-LEVEL ${level}
-</div>
-
-<div class="answerBox">
-${q.q}
-</div>
-
-<div class="message">
-Guess the answer people might choose most often!
-</div>
-
-`;
-
-q.answers.forEach((a,i)=>{
-
-const b=document.createElement("button");
-
-b.className="choice";
-
-b.textContent=a;
-
-b.onclick=()=>{
-
-if(i===0){
-
-score+=10;
-
-msg("🔥 TOP ANSWER!");
-
-}else{
-
-msg("Good guess! The preset top answer was "+q.answers[0]+".");
-
-}
-
-updateStats();
-
-if(nextLevel()){
-
-qIndex=(qIndex+1)%questions.length;
-
-setTimeout(question,700);
-
-}
-
-};
-
-document.getElementById("gameArea").appendChild(b);
-
-});
-
-}
-
-question();
-
-restartButton();
-
-break;
-
-}
-
-default:
-
-msg("🎮 Game loaded!");
-
-}
-
-}
+ if(currentLevel>=10){
+  clearInterval(timerID);
+  document.getElementById("gameBox").innerHTML=
+   `<div class="big">🏆</div>
+    <h2>LEVEL 10 COMPLETE!</h2>
+    <div class="message">You finished all 10 levels!</div>
+    <div class="message">Final Score: ${score}</div>
+    <button class="gameButton" onclick="restartGame()">🔄 PLAY AGAIN</button>`;
+  return;
+ }
+
+ currentLevel++;
+ document.getElementById("level").textContent=currentLevel;
+ startTimer();
+ loadGame();
+}
+
+/* =========================
+   LOAD GAME
+========================= */
+
+function loadGame(){
+ const box=document.getElementById("gameBox");
+
+ const loaders={
+ 0:penaltyMaster,
+ 1:penaltyShootout,
+ 2:basketball,
+ 3:cricket,
+ 4:tennis,
+ 5:keeper,
+ 6:footballerRanking,
+ 7:racing,
+ 8:traffic,
+ 9:highway,
+ 10:drift,
+ 11:spaceDodge,
+ 12:fallingBlocks,
+ 13:numberGuess,
+ 14:memoryMatch,
+ 15:numberMerge,
+ 16:wordUnscramble,
+ 17:mathChallenge,
+ 18:reaction,
+ 19:colorMatch,
+ 20:patternMemory,
+ 21:snake,
+ 22:breakout,
+ 23:skyFlyer,
+ 24:jumper,
+ 25:coinCollector,
+ 26:bubblePop,
+ 27:spaceShooter,
+ 28:maze,
+ 29:target,
+ 30:stackTower,
+ 31:rps,
+ 32:ticTacToe,
+ 33:mole,
+ 34:stars,
+ 35:meteor
+ };
+
+ if(loaders[currentGame]) loaders[currentGame]();
+ else simpleGame();
+}
+
+/* =========================
+   SIMPLE LEVEL GAME
+========================= */
+
+function simpleGame(){
+ const name=games[currentGame][1];
+
+ document.getElementById("gameBox").innerHTML=
+ `<div class="big">${games[currentGame][0]}</div>
+  <h2>${name}</h2>
+  <div class="message">Level ${currentLevel}: get as many points as possible!</div>
+  <button class="gameButton" id="action">TAP!</button>`;
+
+ let hits=0;
+
+ document.getElementById("action").onclick=()=>{
+  hits++;
+  updateScore(10);
+
+  if(hits>=3+currentLevel){
+   nextLevel();
+  }
+ };
+}
+
+/* =========================
+   PENALTY MASTER
+========================= */
+
+function penaltyMaster(){
+ document.getElementById("gameBox").innerHTML=
+ `<div class="big">⚽</div>
+  <h2>Penalty Master</h2>
+  <div class="message">Click SHOOT and try to score!</div>
+  <button class="gameButton" id="shoot">SHOOT ⚽</button>`;
+
+ let shots=0;
+
+ document.getElementById("shoot").onclick=()=>{
+  shots++;
+
+  if(Math.random()>.35){
+   updateScore(20);
+   document.getElementById("shoot").textContent="GOAL! ⚽";
+  }else{
+   document.getElementById("shoot").textContent="SAVED! 🧤";
+  }
+
+  if(shots>=5) setTimeout(nextLevel,500);
+ };
+}
+
+/* =========================
+   PENALTY SHOOTOUT
+========================= */
+
+function penaltyShootout(){
+ document.getElementById("gameBox").innerHTML=
+ `<div class="big">🥅</div>
+  <h2>Penalty Shootout</h2>
+  <button class="gameButton" onclick="shootDirection('LEFT')">⬅️ LEFT</button>
+  <button class="gameButton" onclick="shootDirection('CENTER')">⬆️ CENTER</button>
+  <button class="gameButton" onclick="shootDirection('RIGHT')">➡️ RIGHT</button>
+  <div id="result" class="message"></div>`;
+ window.shootDirection=(d)=>{
+  if(Math.random()>.3){
+   updateScore(15);
+   result.textContent="GOAL! 🔥";
+  }else result.textContent="SAVED! 🧤";
+
+  setTimeout(nextLevel,600);
+ };
+}
+
+/* =========================
+   SPORTS
+========================= */
+
+function basketball(){
+ document.getElementById("gameBox").innerHTML=
+ `<div class="big">🏀</div>
+ <h2>Basketball Hoops</h2>
+ <div class="message">Make ${3+currentLevel} baskets.</div>
+ <button class="gameButton" id="basket">SHOOT</button>`;
+ let n=0;
+ basket.onclick=()=>{
+  n++;
+  updateScore(10);
+  if(n>=3+currentLevel) nextLevel();
+ };
+}
+
+function cricket(){
+ document.getElementById("gameBox").innerHTML=
+ `<div class="big">🏏</div>
+ <h2>Cricket Hit</h2>
+ <button class="gameButton" id="hit">HIT!</button>
+ <div class="message">Hit the ball ${3+currentLevel} times.</div>`;
+ let n=0;
+ hit.onclick=()=>{
+  n++;
+  updateScore(12);
+  if(n>=3+currentLevel) nextLevel();
+ };
+}
+
+function tennis(){
+ document.getElementById("gameBox").innerHTML=
+ `<div class="big">🎾</div>
+ <h2>Tennis Smash</h2>
+ <button class="gameButton" id="smash">SMASH!</button>`;
+ let n=0;
+ smash.onclick=()=>{
+  n++;
+  updateScore(12);
+  if(n>=3+currentLevel) nextLevel();
+ };
+}
+
+function keeper(){
+ document.getElementById("gameBox").innerHTML=
+ `<div class="big">🧤</div>
+ <h2>Football Keeper</h2>
+ <div class="message">Save ${3+currentLevel} shots.</div>
+ <button class="gameButton" id="save">SAVE!</button>`;
+ let n=0;
+ save.onclick=()=>{
+  n++;
+  updateScore(15);
+  if(n>=3+currentLevel) nextLevel();
+ };
+}
+
+/* =========================
+   FOOTBALLER RANKING
+========================= */
+
+function footballerRanking(){
+
+ const players=[
+ "Cristiano Ronaldo","Lionel Messi","Kylian Mbappe",
+ "Neymar","Vinicius Jr","Jude Bellingham",
+ "Erling Haaland","Mohamed Salah","Kevin De Bruyne",
+ "Luka Modric","Karim Benzema","Harry Kane",
+ "Rodri","Bukayo Saka","Lamine Yamal"
+ ];
+
+ let chosen=[...players].sort(()=>Math.random()-.5).slice(0,10);
+ let rank=[];
+ let index=0;
+
+ function draw(){
+  document.getElementById("gameBox").innerHTML=
+  `<h2>🏆 Footballer Ranking</h2>
+   <div class="message">Rank 10 footballers from 1 to 10.</div>
+   <div class="rankList">
+    ${chosen.map((p,i)=>
+     `<div class="rankItem" onclick="rankPlayer(${i})">
+       ${i+1}. ${p}
+      </div>`).join("")}
+   </div>
+   <div class="message">Selected: ${rank.length}/10</div>`;
+ }
+
+ window.rankPlayer=(i)=>{
+  if(!rank.includes(chosen[i])){
+   rank.push(chosen[i]);
+   updateScore(5);
+  }
+
+  if(rank.length===10){
+   nextLevel();
+  }else draw();
+ };
+
+ draw();
+}
+
+/* =========================
+   RACING
+========================= */
+
+function racing(){
+ racingCanvas(false);
+}
+
+function traffic(){
+ racingCanvas(true);
+}
+
+function highway(){
+ racingCanvas(true);
+}
+
+function drift(){
+ racingCanvas(false);
+}
+
+function racingCanvas(hard){
+
+ document.getElementById("gameBox").innerHTML=
+ `<h2>${games[currentGame][1]}</h2>
+ <canvas id="race" width="700" height="420"></canvas>
+ <div class="message">Use ← → or A / D</div>`;
+
+ const c=document.getElementById("race");
+ const x=c.getContext("2d");
+
+ let player=330;
+ let obstacles=[];
+ let roadY=0;
+ let alive=true;
+
+ document.onkeydown=e=>{
+  if(e.key==="ArrowLeft"||e.key.toLowerCase()==="a") player-=20;
+  if(e.key==="ArrowRight"||e.key.toLowerCase()==="d") player+=20;
+  player=Math.max(190,Math.min(470,player));
+ };
+
+ function loop(){
+  if(!alive)return;
+
+  roadY+=6;
+
+  x.fillStyle="#101827";
+  x.fillRect(0,0,700,420);
+
+  x.fillStyle="#202b3d";
+  x.fillRect(160,0,380,420);
+
+  x.strokeStyle="#e5e7eb";
+  x.setLineDash([30,25]);
+  x.lineDashOffset=-roadY;
+  x.lineWidth=5;
+  x.beginPath();
+  x.moveTo(350,0);
+  x.lineTo(350,420);
+  x.stroke();
+  x.setLineDash([]);
+
+  if(Math.random()<.035){
+   obstacles.push({
+    x:Math.random()*330+190,
+    y:-50,
+    speed:hard?7:5
+   });
+  }
+
+  x.font="42px Arial";
+  x.fillText("🏎️",player,365);
+
+  obstacles.forEach(o=>{
+   o.y+=o.speed;
+   x.font="40px Arial";
+   x.fillText("🚗",o.x,o.y);
+
+   if(o.y>330&&o.y<390&&Math.abs(o.x-player)<45){
+    alive=false;
+    document.getElementById("gameBox").innerHTML+=
+    `<div class="message">💥 CRASH!</div>
+     <button class="gameButton" onclick="restartGame()">🔄 RESTART GAME</button>`;
+   }
+
+   if(o.y>420){
+    updateScore(5);
+   }
+  });
+
+  animationID=requestAnimationFrame(loop);
+ }
+
+ loop();
+}
+
+/* =========================
+   SPACE DODGE
+========================= */
+
+function spaceDodge(){
+ racingCanvas(true);
+}
+
+/* =========================
+   NUMBER GUESSING
+========================= */
+
+function numberGuess(){
+ let target=Math.floor(Math.random()*100)+1;
+ let attempts=0;
+
+ document.getElementById("gameBox").innerHTML=
+ `<div class="big">🔢</div>
+ <h2>Number Guessing</h2>
+ <div class="message">Guess a number from 1–100.</div>
+ <input class="gameInput" id="guess" type="number">
+ <br>
+ <button class="gameButton" onclick="checkGuess()">GUESS</button>
+ <div id="hint" class="message"></div>`;
+
+ window.checkGuess=()=>{
+  let n=Number(guess.value);
+  attempts++;
+
+  if(n===target){
+   updateScore(Math.max(5,30-attempts));
+   hint.textContent="🎉 Correct!";
+   setTimeout(nextLevel,700);
+  }else if(n<target){
+   hint.textContent="⬆️ Higher!";
+  }else{
+   hint.textContent="⬇️ Lower!";
+  }
+ };
+}
+
+/* =========================
+   MEMORY MATCH
+========================= */
+
+function memoryMatch(){
+
+ let emojis=["🍎","🍌","🍇","🍉","🥝","🍒","🥭","🍓"];
+ let cards=[...emojis,...emojis].sort(()=>Math.random()-.5);
+ let opened=[];
+ let matched=0;
+
+ document.getElementById("gameBox").innerHTML=
+ `<h2>🧠 Memory Match</h2>
+ <div id="memoryGrid" class="memoryGrid"></div>`;
+
+ let grid=document.getElementById("memoryGrid");
+
+ cards.forEach((emoji,i)=>{
+  let b=document.createElement("button");
+  b.className="memoryCell";
+  b.textContent="?";
+
+  b.onclick=()=>{
+   if(opened.length>=2||b.classList.contains("active"))return;
+
+   b.textContent=emoji;
+   b.classList.add("active");
+   opened.push({b,emoji});
+
+   if(opened.length===2){
+    if(opened[0].emoji===opened[1].emoji){
+     matched++;
+     updateScore(10);
+     opened=[];
+     if(matched===emojis.length)setTimeout(nextLevel,500);
+    }else{
+     setTimeout(()=>{
+      opened.forEach(a=>{
+       a.b.textContent="?";
+       a.b.classList.remove("active");
+      });
+      opened=[];
+     },600);
+    }
+   }
+  };
+
+  grid.appendChild(b);
+ });
+}
+
+/* =========================
+   NUMBER MERGE
+========================= */
+
+function numberMerge(){
+ let n=2;
+
+ document.getElementById("gameBox").innerHTML=
+ `<div class="big" id="mergeNum">${n}</div>
+ <h2>Number Merge</h2>
+ <button class="gameButton" onclick="merge()">MERGE</button>`;
+
+ window.merge=()=>{
+  n*=2;
+  mergeNum.textContent=n;
+  updateScore(n/2);
+
+  if(n>=Math.pow(2,currentLevel+3))nextLevel();
+ };
+}
+
+/* =========================
+   WORD UNSCRAMBLE
+========================= */
+
+function wordUnscramble(){
+
+ const words=[
+ "football","computer","galaxy","champion","guitar",
+ "school","cricket","racing","keyboard","adventure",
+ "javascript","python","basketball","victory","stadium"
+ ];
+
+ let word=words[Math.floor(Math.random()*words.length)];
+ let scrambled=word.split("").sort(()=>Math.random()-.5).join("");
+
+ document.getElementById("gameBox").innerHTML=
+ `<h2>🔤 Unscramble Word</h2>
+ <div class="word">${scrambled.toUpperCase()}</div>
+ <input class="gameInput" id="wordInput">
+ <br>
+ <button class="gameButton" onclick="checkWord()">CHECK</button>
+ <div id="wordResult" class="message"></div>`;
+
+ window.checkWord=()=>{
+  if(wordInput.value.toLowerCase().trim()===word){
+   updateScore(20);
+   wordResult.textContent="✅ Correct!";
+   setTimeout(nextLevel,600);
+  }else{
+   wordResult.textContent="❌ Try again!";
+  }
+ };
+}
+
+/* =========================
+   MATH
+========================= */
+
+function mathChallenge(){
+ let a=Math.floor(Math.random()*10)+currentLevel;
+ let b=Math.floor(Math.random()*10)+currentLevel;
+ let answer=a+b;
+
+ document.getElementById("gameBox").innerHTML=
+ `<h2>➗ Math Challenge</h2>
+ <div class="big">${a} + ${b} = ?</div>
+ <input class="gameInput" id="mathInput" type="number">
+ <br>
+ <button class="gameButton" onclick="checkMath()">CHECK</button>
+ <div id="mathResult" class="message"></div>`;
+
+ window.checkMath=()=>{
+  if(Number(mathInput.value)===answer){
+   updateScore(15);
+   mathResult.textContent="🔥 Correct!";
+   setTimeout(nextLevel,500);
+  }else{
+   mathResult.textContent="❌ Wrong!";
+  }
+ };
+}
+
+/* =========================
+   REACTION
+========================= */
+
+function reaction(){
+ document.getElementById("gameBox").innerHTML=
+ `<h2>⚡ Reaction Test</h2>
+ <div class="message">Wait for GO!</div>
+ <button class="gameButton" id="react" disabled>WAIT...</button>`;
+
+ let delay=1000+Math.random()*2500;
+
+ setTimeout(()=>{
+  react.disabled=false;
+  react.textContent="CLICK!";
+  react.onclick=()=>{
+   updateScore(20);
+   nextLevel();
+  };
+ },delay);
+}
+
+/* =========================
+   COLOR MATCH
+========================= */
+
+function colorMatch(){
+
+ const colors=["RED","BLUE","GREEN","YELLOW"];
+ let correct=colors[Math.floor(Math.random()*4)];
+
+ document.getElementById("gameBox").innerHTML=
+ `<h2>🎨 Color Match</h2>
+ <div class="big">${correct}</div>
+ <div>${colors.map(c=>
+ `<button class="gameButton" onclick="chooseColor('${c}')">${c}</button>`
+ ).join("")}</div>`;
+
+ window.chooseColor=(c)=>{
+  if(c===correct){
+   updateScore(10);
+   nextLevel();
+  }
+ };
+}
+
+/* =========================
+   PATTERN MEMORY
+========================= */
+
+function patternMemory(){
+
+ const size=16;
+ const length=Math.min(3+currentLevel,10);
+ let pattern=[];
+ let player=[];
+ let showing=true;
+
+ for(let i=0;i<length;i++){
+  let n=Math.floor(Math.random()*size);
+  if(!pattern.includes(n))pattern.push(n);
+  else i--;
+ }
+
+ document.getElementById("gameBox").innerHTML=
+ `<h2>🟦 Pattern Memory</h2>
+ <div class="message">Remember the blue squares!</div>
+ <div id="patternGrid" class="memoryGrid"></div>`;
+
+ const grid=document.getElementById("patternGrid");
+
+ for(let i=0;i<size;i++){
+  let b=document.createElement("button");
+  b.className="memoryCell";
+  b.id="p"+i;
+  grid.appendChild(b);
+ }
+
+ pattern.forEach((n,i)=>{
+  setTimeout(()=>{
+   document.getElementById("p"+n).classList.add("active");
+
+   setTimeout(()=>{
+    document.getElementById("p"+n).classList.remove("active");
+   },350);
+
+  },i*450);
+ });
+
+ setTimeout(()=>{
+  showing=false;
+
+  document.getElementById("gameBox").insertAdjacentHTML(
+   "afterbegin",
+   `<div class="message">The pattern is hidden. Now reproduce it!</div>`
+  );
+
+  document.querySelectorAll("#patternGrid button").forEach((b,i)=>{
+   b.onclick=()=>{
+    if(showing)return;
+
+    if(player.includes(i))return;
+
+    player.push(i);
+    b.classList.add("active");
+
+    if(player.length===pattern.length){
+
+     let correct=player.every((v,j)=>v===pattern[j]);
+
+     if(correct){
+      updateScore(25);
+      setTimeout(nextLevel,600);
+     }else{
+      document.getElementById("gameBox").insertAdjacentHTML(
+       "beforeend",
+       `<div class="message">❌ Wrong pattern!</div>
+        <button class="gameButton" onclick="restartGame()">🔄 RESTART GAME</button>`
+      );
+     }
+    }
+   };
+  });
+ },length*450+500);
+}
+
+/* =========================
+   SNAKE
+========================= */
+
+function snake(){
+
+ document.getElementById("gameBox").innerHTML=
+ `<h2>🐍 Snake</h2>
+ <canvas id="snakeCanvas" width="400" height="400"></canvas>
+ <div class="message">Use arrow keys.</div>`;
+
+ const c=document.getElementById("snakeCanvas");
+ const x=c.getContext("2d");
+
+ let snakeBody=[{x:10,y:10}];
+ let food={x:15,y:15};
+ let dx=1,dy=0;
+ let alive=true;
+
+ document.onkeydown=e=>{
+  if(e.key==="ArrowUp"&&dy!==1){dx=0;dy=-1}
+  if(e.key==="ArrowDown"&&dy!==-1){dx=0;dy=1}
+  if(e.key==="ArrowLeft"&&dx!==1){dx=-1;dy=0}
+  if(e.key==="ArrowRight"&&dx!==-1){dx=1;dy=0}
+ };
+
+ let last=0;
+
+ function loop(t){
+  if(!alive)return;
+
+  if(t-last>100){
+   last=t;
+
+   let head={
+    x:snakeBody[0].x+dx,
+    y:snakeBody[0].y+dy
+   };
+
+   if(head.x<0||head.y<0||head.x>=20||head.y>=20){
+    alive=false;
+    document.getElementById("gameBox").innerHTML+=
+    `<div class="message">💥 GAME OVER</div>
+     <button class="gameButton" onclick="restartGame()">🔄 RESTART GAME</button>`;
+    return;
+   }
+
+   snakeBody.unshift(head);
+
+   if(head.x===food.x&&head.y===food.y){
+    updateScore(10);
+    food={
+     x:Math.floor(Math.random()*20),
+     y:Math.floor(Math.random()*20)
+    };
+   }else snakeBody.pop();
+
+   x.clearRect(0,0,400,400);
+
+   x.fillStyle="#22c55e";
+   snakeBody.forEach(s=>x.fillRect(s.x*20,s.y*20,18,18));
+
+   x.fillStyle="#ef4444";
+   x.fillRect(food.x*20,food.y*20,18,18);
+  }
+
+  animationID=requestAnimationFrame(loop);
+ }
+
+ animationID=requestAnimationFrame(loop);
+}
+
+/* =========================
+   BREAKOUT
+========================= */
+
+function breakout(){
+
+ document.getElementById("gameBox").innerHTML=
+ `<h2>🧱 Breakout</h2>
+ <canvas id="breakCanvas" width="600" height="400"></canvas>
+ <div class="message">Use ← →</div>`;
+
+ const c=document.getElementById("breakCanvas");
+ const x=c.getContext("2d");
+
+ let paddle=250;
+ let ball={x:300,y:300,dx:4,dy:-4};
+ let blocks=[];
+
+ for(let r=0;r<3+currentLevel/3;r++){
+  for(let col=0;col<7;col++){
+   blocks.push({
+    x:20+col*80,
+    y:30+r*30,
+    alive:true
+   });
+  }
+ }
+
+ document.onkeydown=e=>{
+  if(e.key==="ArrowLeft")paddle-=25;
+  if(e.key==="ArrowRight")paddle+=25;
+  paddle=Math.max(0,Math.min(500,paddle));
+ };
+
+ function loop(){
+  x.clearRect(0,0,600,400);
+
+  x.fillStyle="#2563eb";
+  x.fillRect(paddle,370,100,12);
+
+  ball.x+=ball.dx;
+  ball.y+=ball.dy;
+
+  if(ball.x<0||ball.x>590)ball.dx*=-1;
+  if(ball.y<0)ball.dy*=-1;
+
+  if(ball.y>355&&ball.x>paddle&&ball.x<paddle+100)ball.dy*=-1;
+
+  x.beginPath();
+  x.arc(ball.x,ball.y,8,0,Math.PI*2);
+  x.fill();
+
+  blocks.forEach(b=>{
+   if(!b.alive)return;
+
+   x.fillStyle="#f59e0b";
+   x.fillRect(b.x,b.y,70,20);
+
+   if(
+    ball.x>b.x&&
+    ball.x<b.x+70&&
+    ball.y>b.y&&
+    ball.y<b.y+20
+   ){
+    b.alive=false;
+    ball.dy*=-1;
+    updateScore(5);
+   }
+  });
+
+  if(ball.y>400){
+   document.getElementById("gameBox").innerHTML+=
+   `<div class="message">💥 GAME OVER</div>
+    <button class="gameButton" onclick="restartGame()">🔄 RESTART GAME</button>`;
+   return;
+  }
+
+  if(blocks.every(b=>!b.alive)){
+   nextLevel();
+   return;
+  }
+
+  animationID=requestAnimationFrame(loop);
+ }
+
+ animationID=requestAnimationFrame(loop);
+}
+
+/* =========================
+   SKY FLYER / JUMPER
+========================= */
+
+function skyFlyer(){simpleGame()}
+function jumper(){simpleGame()}
+function coinCollector(){simpleGame()}
+function bubblePop(){simpleGame()}
+function spaceShooter(){simpleGame()}
+function maze(){simpleGame()}
+function target(){simpleGame()}
+function stackTower(){simpleGame()}
+function rps(){simpleGame()}
+function ticTacToe(){simpleGame()}
+function mole(){simpleGame()}
+function stars(){simpleGame()}
+function meteor(){simpleGame()}
+function fallingBlocks(){simpleGame()}
 
 </script>
 
